@@ -34,7 +34,7 @@ class AuthButton extends StatelessWidget {
                 )
               : child,
       style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(18),
           primary: color,
           elevation: 0,
           shape: const RoundedRectangleBorder(

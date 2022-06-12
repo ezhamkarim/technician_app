@@ -5,7 +5,7 @@ import 'package:technician_app/src/view/widgets/auth_button.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
-
+  static const routeName = '/';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,12 +19,22 @@ class LandingPage extends StatelessWidget {
                   Colors.black, FontSizeEnum.title, FontWeight.bold),
             ),
             Expanded(child: SvgPicture.asset('assets/images/home_pic.svg')),
-            AuthButton(
-                onPressed: () {
-                  // TODO: set the app first time usage in the
-                },
-                color: CustomStyle.primarycolor,
-                child: const Text('Get Started'))
+            Row(
+              children: [
+                Expanded(
+                  child: AuthButton(
+                      onPressed: () {
+                        // TODO: set the app first time usage in the
+                      },
+                      color: CustomStyle.primarycolor,
+                      child: Text(
+                        'Get Started',
+                        style: CustomStyle.getStyle(
+                            Colors.white, FontSizeEnum.title2, FontWeight.bold),
+                      )),
+                ),
+              ],
+            )
           ],
         ),
       ),
