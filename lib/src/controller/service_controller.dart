@@ -38,7 +38,7 @@ class ServiceController extends DatabaseService {
     try {
       await servicesCollection.doc(service.id).delete();
     } catch (e) {
-      logError('Error update service ${e.toString()}');
+      logError('Error delete service ${e.toString()}');
       return;
     }
   }

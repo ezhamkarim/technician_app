@@ -9,4 +9,6 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('requestsTechnician');
   final CollectionReference servicesCollection =
       FirebaseFirestore.instance.collection('servicesTechnician');
+  final CollectionReference feedbackCollection =
+      FirebaseFirestore.instance.collection('servicesTechnician');
 }
