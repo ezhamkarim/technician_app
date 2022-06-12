@@ -23,6 +23,7 @@ class UserModel implements BaseModel {
         email: data['email'],
         pictureLink: data['pictureLink']);
   }
+
   @override
   Map<String, dynamic> toMap() {
     return {
@@ -38,3 +39,5 @@ class UserModel implements BaseModel {
   //   return {}
   // }
 }
+
+enum Role { customer, technician, admin }
