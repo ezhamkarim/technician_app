@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
           child: Container(
         height: SizeHelper(context).scaledHeight(),
-        padding: const EdgeInsets.fromLTRB(64, 120, 64, 64),
+        padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
         child: Form(
           key: formKey,
           child: Column(
