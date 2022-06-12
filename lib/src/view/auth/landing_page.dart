@@ -30,7 +30,7 @@ class LandingPage extends StatelessWidget {
                       child: Text(
                         'Get Started',
                         style: CustomStyle.getStyle(
-                            Colors.white, FontSizeEnum.title2, FontWeight.bold),
+                            Colors.white, FontSizeEnum.title2, FontWeight.w600),
                       )),
                 ),
               ],
