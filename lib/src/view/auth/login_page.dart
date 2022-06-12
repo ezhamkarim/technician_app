@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:technician_app/src/helper/size_helper.dart';
+import 'package:technician_app/src/view/auth/register_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
@@ -51,7 +52,10 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         const Text('Dont have account?'),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(RegisterPage.routeName);
+                            },
                             child: Text(
                               'Register',
                               style: CustomStyle.getStyle(

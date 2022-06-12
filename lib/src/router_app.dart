@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:technician_app/src/view/auth/landing_page.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
+import 'package:technician_app/src/view/auth/register_page.dart';
 
 import 'view/exception_view.dart';
 
@@ -16,6 +17,8 @@ class RouterApp {
             return const LandingPage();
           case LoginPage.routeName:
             return const LoginPage();
+          case RegisterPage.routeName:
+            return const RegisterPage();
           default:
             return ExceptionView(routeName: routeSettings.name!);
         }
