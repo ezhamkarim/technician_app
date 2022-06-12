@@ -6,6 +6,7 @@ import 'package:technician_app/src/helper/size_helper.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/view/auth/register_page.dart';
+import 'package:technician_app/src/view/home/home_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final pwController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
+    final firebaseUser = context.watch<User?>();
     final rootProvider = context.read<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -87,8 +88,14 @@ class _LoginPageState extends State<LoginPage> {
                                     email: emailController.text,
                                     password: pwController.text,
                                     rootProvider: rootProvider)
+                                .then((value) => Navigator.of(context)
+                                    .pushNamedAndRemoveUntil(
+                                        HomePage.routeName,
+                                        ModalRoute.withName(
+                                            HomePage.routeName)))
                                 .catchError((e) {
                               logError('Error login :${e.toString()}');
+                              //TODO: Show dialog error
                             });
                           }
                         },

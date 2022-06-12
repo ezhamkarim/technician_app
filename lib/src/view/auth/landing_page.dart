@@ -6,7 +6,7 @@ import 'package:technician_app/src/view/widgets/auth_button.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
-  static const routeName = '/';
+  static const routeName = '/landing';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

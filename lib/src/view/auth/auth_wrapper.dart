@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:technician_app/src/view/auth/landing_page.dart';
 
-import '../../style/custom_style.dart';
+import '../home/home_page.dart';
 
 class AuthWrapper extends StatefulWidget {
   const AuthWrapper({Key? key}) : super(key: key);
@@ -12,26 +15,11 @@ class AuthWrapper extends StatefulWidget {
 class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Loading',
-              style: CustomStyle.getStyle(
-                  Colors.black, FontSizeEnum.content2, FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const CircularProgressIndicator(
-                strokeWidth: 4,
-                backgroundColor: CustomStyle.secondaryColor,
-                color: Colors.white),
-          ],
-        ),
-      ),
-    );
+    final firebaseUser = context.watch<User?>();
+
+    if (firebaseUser != null) {
+      return const HomePage();
+    }
+    return const LandingPage();
   }
 }
