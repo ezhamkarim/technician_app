@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:technician_app/src/helper/size_helper.dart';
+import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../../style/custom_style.dart';
@@ -18,20 +20,63 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-          child: Padding(
+          child: Container(
+        height: SizeHelper(context).scaledHeight(),
         padding: const EdgeInsets.fromLTRB(64, 120, 64, 64),
         child: Form(
           key: formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Login.',
                 style: CustomStyle.getStyle(
                     Colors.black, FontSizeEnum.title, FontWeight.bold),
               ),
-              AuthTextField(
-                textEditingController: emailController,
-                placeholder: 'Password',
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AuthTextField(
+                      textEditingController: emailController,
+                      placeholder: 'Email',
+                    ),
+                    const SizedBox(height: 48),
+                    AuthTextField(
+                      textEditingController: pwController,
+                      placeholder: 'Password',
+                      isObsecure: true,
+                    ),
+                    Row(
+                      children: [
+                        const Text('Dont have account?'),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Register',
+                              style: CustomStyle.getStyle(
+                                  CustomStyle.primarycolor,
+                                  FontSizeEnum.content2,
+                                  FontWeight.normal),
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: AuthButton(
+                        onPressed: () {},
+                        color: CustomStyle.primarycolor,
+                        child: Text(
+                          'Login',
+                          style: CustomStyle.getStyle(Colors.white,
+                              FontSizeEnum.title2, FontWeight.w500),
+                        )),
+                  ),
+                ],
               )
             ],
           ),
