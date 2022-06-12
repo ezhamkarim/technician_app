@@ -80,15 +80,17 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     child: AuthButton(
                         onPressed: () async {
-                          await context
-                              .read<AuthService>()
-                              .signIn(
-                                  email: emailController.text,
-                                  password: pwController.text,
-                                  rootProvider: rootProvider)
-                              .catchError((e) {
-                            logError('Error sign up :${e.toString()}');
-                          });
+                          if (formKey.currentState!.validate()) {
+                            await context
+                                .read<AuthService>()
+                                .signIn(
+                                    email: emailController.text,
+                                    password: pwController.text,
+                                    rootProvider: rootProvider)
+                                .catchError((e) {
+                              logError('Error login :${e.toString()}');
+                            });
+                          }
                         },
                         color: CustomStyle.primarycolor,
                         child: Text(

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:technician_app/src/model/roles_model.dart';
+import 'package:technician_app/src/model/user_model.dart';
+import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
@@ -13,6 +17,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final pwController = TextEditingController();
   final nameController = TextEditingController();
@@ -26,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    var rootProvider = context.read<RootProvider>();
     return Scaffold(
       body: Scrollbar(
         isAlwaysShown: true,
@@ -81,7 +87,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           .map((e) => DropdownMenuItem(
                               value: e.name, child: Text(e.name)))
                           .toList(),
-                      onChanged: (role) {}),
+                      onChanged: (role) {
+                        roleSelected.name = role!;
+                      }),
                 ),
                 const SizedBox(height: 48),
                 AuthTextField(
@@ -110,7 +118,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Expanded(
                       child: AuthButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (pwController.text != rePwController.text) {
+                              //TODO: Show dialog
+                              return;
+                            }
+                            if (formKey.currentState!.validate()) {
+                              var userModel = UserModel(
+                                  name: nameController.text,
+                                  role: roleSelected.name,
+                                  phoneNumber: phoneNoController.text,
+                                  email: emailController.text);
+                              await context.read<AuthService>().signUp(
+                                  email: emailController.text,
+                                  password: pwController.text,
+                                  rootProvider: rootProvider,
+                                  userModel: userModel);
+                            }
+                          },
                           color: CustomStyle.primarycolor,
                           child: Text(
                             'Register',
