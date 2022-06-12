@@ -54,8 +54,7 @@ class AuthService {
     }
   }
 
-  Future<String> signOut(
-      {required RootProvider rootProvider, required Map data}) async {
+  Future<String> signOut({required RootProvider rootProvider}) async {
     try {
       rootProvider.setState = ViewState.busy;
       await _firebaseAuth.signOut();

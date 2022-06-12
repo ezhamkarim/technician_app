@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
-    final rootProvider = context.read<RootProvider>();
+    final rootProvider = context.watch<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Container(
@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Expanded(
                     child: AuthButton(
+                        viewState: rootProvider.viewState,
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             await context
