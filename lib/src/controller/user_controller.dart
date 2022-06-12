@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/services/database_service.dart';
@@ -18,9 +19,21 @@ class UserController extends DatabaseService {
 
   Future<void> update(UserModel userModel) async {
     try {
+      //TODO: Add upload to firebase storage;
+
       await userDataCollection.doc(uid).set(userModel.toMap());
-    } catch (e) {}
+    } catch (e) {
+      logError('Error update user');
+      return;
+    }
   }
 
-  void read(args) {}
+  Stream<UserModel> read() {
+    return userDataCollection
+        .doc(uid)
+        .snapshots()
+        .map((DocumentSnapshot snapshot) {
+      return UserModel.fromSnapshot(snapshot);
+    });
+  }
 }
