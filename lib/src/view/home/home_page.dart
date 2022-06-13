@@ -21,56 +21,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();
     var firebaseUser = context.watch<User>();
-    return Scaffold(
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
-        child: StreamBuilder<UserModel>(
-            stream: UserController(firebaseUser.uid).read(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var userModel = snapshot.data!;
-                var role = GeneralHelper.getRole(userModel.role);
-                switch (role) {
-                  case Role.admin:
-                    return buildAdminDashboard();
-                  case Role.technician:
-                    return buildTechnicianDashboard();
-                  case Role.customer:
-                    return buildCustomerDashboard();
-                  default:
-                    return Column(
-                      children: [
-                        Text('HomePage ${userModel.name} '),
-                        AuthButton(
-                            onPressed: () async {
-                              await context
-                                  .read<AuthService>()
-                                  .signOut(
-                                    rootProvider: rootProvider,
-                                  )
-                                  .then((value) => Navigator.of(context)
-                                      .pushNamedAndRemoveUntil(
-                                          LoginPage.routeName,
-                                          ModalRoute.withName(
-                                              LoginPage.routeName)));
-                            },
-                            color: CustomStyle.primarycolor,
-                            child: const Text('Logout'))
-                      ],
-                    );
-                }
-              } else {
-                return Text('Error ${snapshot.error}');
+    return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
+      child: StreamBuilder<UserModel>(
+          stream: UserController(firebaseUser.uid).read(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var userModel = snapshot.data!;
+              var role = GeneralHelper.getRole(userModel.role);
+              switch (role) {
+                case Role.admin:
+                  return buildAdminDashboard();
+                case Role.technician:
+                  return buildTechnicianDashboard();
+                case Role.customer:
+                  return buildCustomerDashboard();
+                default:
+                  return Column(
+                    children: [
+                      Text('HomePage ${userModel.name} '),
+                      AuthButton(
+                          onPressed: () async {
+                            await context
+                                .read<AuthService>()
+                                .signOut(
+                                  rootProvider: rootProvider,
+                                )
+                                .then((value) => Navigator.of(context)
+                                    .pushNamedAndRemoveUntil(
+                                        LoginPage.routeName,
+                                        ModalRoute.withName(
+                                            LoginPage.routeName)));
+                          },
+                          color: CustomStyle.primarycolor,
+                          child: const Text('Logout'))
+                    ],
+                  );
               }
-            }),
-      )),
-    );
+            } else {
+              return Text('Error ${snapshot.error}');
+            }
+          }),
+    ));
   }
 
   Widget buildTechnicianDashboard() {
@@ -242,6 +239,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildCustomerDashboard() {
+    var rootProvider = context.watch<RootProvider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -276,7 +274,20 @@ class _HomePageState extends State<HomePage> {
               '4. Collect from store',
               style: CustomStyle.getStyle(
                   Colors.white, FontSizeEnum.title2, FontWeight.w400),
-            ))
+            )),
+            AuthButton(
+                onPressed: () async {
+                  await context
+                      .read<AuthService>()
+                      .signOut(
+                        rootProvider: rootProvider,
+                      )
+                      .then((value) => Navigator.of(context)
+                          .pushNamedAndRemoveUntil(LoginPage.routeName,
+                              ModalRoute.withName(LoginPage.routeName)));
+                },
+                color: CustomStyle.primarycolor,
+                child: const Text('Logout'))
           ],
         )
       ],
