@@ -5,6 +5,7 @@ import 'package:technician_app/src/view/auth/register_page.dart';
 import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/home_page.dart';
+import 'package:technician_app/src/view/home/index_page.dart';
 
 import 'view/auth/auth_wrapper.dart';
 import 'view/exception_view.dart';
@@ -23,7 +24,7 @@ class RouterApp {
             return const LoginPage();
           case RegisterPage.routeName:
             return const RegisterPage();
-          case HomePage.routeName:
+          case IndexPage.routeName:
             return const HomePage();
           case ServiceListPage.routeName:
             return const ServiceListPage();

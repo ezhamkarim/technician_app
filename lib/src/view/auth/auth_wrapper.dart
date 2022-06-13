@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/view/auth/landing_page.dart';
-
-import '../home/home_page.dart';
+import 'package:technician_app/src/view/home/index_page.dart';
 
 class AuthWrapper extends StatefulWidget {
   const AuthWrapper({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
     final firebaseUser = context.watch<User?>();
     logInfo('Firebase user : $firebaseUser');
     if (firebaseUser != null) {
-      return const HomePage();
+      return const IndexPage();
     }
     return const LandingPage();
   }

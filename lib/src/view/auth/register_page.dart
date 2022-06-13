@@ -5,11 +5,11 @@ import 'package:technician_app/src/model/roles_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
-import 'package:technician_app/src/view/home/home_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../../style/custom_style.dart';
+import '../home/index_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -142,8 +142,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       rootProvider: rootProvider,
                                       userModel: userModel);
                                   Navigator.of(context).pushNamedAndRemoveUntil(
-                                      HomePage.routeName,
-                                      ModalRoute.withName(HomePage.routeName));
+                                      IndexPage.routeName,
+                                      ModalRoute.withName(IndexPage.routeName));
                                 } catch (e) {
                                   logError('Error login $e');
                                   //TODO: Show dialog error;

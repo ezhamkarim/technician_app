@@ -6,7 +6,7 @@ import 'package:technician_app/src/helper/size_helper.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/view/auth/register_page.dart';
-import 'package:technician_app/src/view/home/home_page.dart';
+import 'package:technician_app/src/view/home/index_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
@@ -91,9 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                                     rootProvider: rootProvider)
                                 .then((value) => Navigator.of(context)
                                     .pushNamedAndRemoveUntil(
-                                        HomePage.routeName,
+                                        IndexPage.routeName,
                                         ModalRoute.withName(
-                                            HomePage.routeName)))
+                                            IndexPage.routeName)))
                                 .catchError((e) {
                               logError('Error login :${e.toString()}');
                               //TODO: Show dialog error

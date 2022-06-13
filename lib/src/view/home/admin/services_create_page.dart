@@ -9,7 +9,7 @@ import '../../../style/custom_style.dart';
 
 class ServicesCreatePage extends StatefulWidget {
   const ServicesCreatePage({Key? key}) : super(key: key);
-  static const routeName = '/home/services/create';
+  static const routeName = '/index/services/create';
   @override
   State<ServicesCreatePage> createState() => _ServicesCreatePageState();
 }
