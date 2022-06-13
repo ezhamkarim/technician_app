@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/feedback_controller.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/feedback_model.dart' as feedback;
 
 import '../../../style/custom_style.dart';
@@ -20,6 +21,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    logInfo('User Id : ${firebaseUser.uid}');
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/base_model.dart';
 
 class Feedback implements BaseModel {
@@ -19,7 +20,7 @@ class Feedback implements BaseModel {
     return Feedback(
         comment: json['comment'],
         rating: json['rating'],
-        techicianId: json['techicianId'],
+        techicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
         id: json['id']);
@@ -27,10 +28,11 @@ class Feedback implements BaseModel {
 
   factory Feedback.fromSnapshot(DocumentSnapshot documentSnapshot) {
     var json = documentSnapshot.data() as Map<String, dynamic>;
+    logInfo('Json :$json');
     return Feedback(
         comment: json['comment'],
         rating: json['rating'],
-        techicianId: json['techicianId'],
+        techicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
         id: json['id']);
@@ -40,7 +42,7 @@ class Feedback implements BaseModel {
     return {
       'rating': rating,
       'comment': comment,
-      'techicianId': techicianId,
+      'technicianId': techicianId,
       'userId': userId,
       'dateTime': dateTime,
       'id': id
