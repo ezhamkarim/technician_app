@@ -9,17 +9,18 @@ class BookingController extends DatabaseService {
   final String? id;
   BookingController({this.id});
 
-  Future<void> create(Booking booking, RootProvider rootProvider) async {
+  Future<Booking?> create(Booking booking, RootProvider rootProvider) async {
     try {
       rootProvider.setState = ViewState.busy;
       var docRef = bookingCollection.doc();
       booking.id = docRef.id;
       await docRef.set(booking.toMap());
       rootProvider.setState = ViewState.idle;
+      return booking;
     } catch (e) {
       logError('Error create booking: ${e.toString()}');
       rootProvider.setState = ViewState.idle;
-      return;
+      return null;
     }
   }
 

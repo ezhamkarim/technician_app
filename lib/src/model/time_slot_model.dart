@@ -5,32 +5,53 @@ class TimeSlot implements BaseModel {
   String technicianId;
   String id;
   DateTime date;
+  String userId;
+  String bookingId;
   String time;
-
+  bool isBooked;
+  bool isSelected;
   TimeSlot(
       {required this.id,
       required this.technicianId,
       required this.time,
-      required this.date});
+      required this.date,
+      required this.isBooked,
+      required this.userId,
+      required this.bookingId,
+      this.isSelected = false});
 
   factory TimeSlot.fromObj(Map<String, dynamic> obj) {
     return TimeSlot(
         id: obj['id'],
         technicianId: obj['technicianId'],
         time: obj['time'],
-        date: obj['date'].toDate());
+        date: obj['date'].toDate(),
+        isBooked: obj['isBooked'],
+        userId: obj['userId'],
+        bookingId: obj['bookingId']);
   }
   factory TimeSlot.fromSnapshot(DocumentSnapshot documentSnapshot) {
-    var obj = documentSnapshot as Map<String, dynamic>;
+    var obj = documentSnapshot.data() as Map<String, dynamic>;
     return TimeSlot(
         id: obj['id'],
         technicianId: obj['technicianId'],
         time: obj['time'],
-        date: obj['date'].toDate());
+        date: obj['date'].toDate(),
+        isBooked: obj['isBooked'],
+        userId: obj['userId'],
+        bookingId: obj['bookingId']);
   }
   @override
   Map<String, dynamic> toMap() {
-    return {'technicianId': technicianId, 'time': time, 'id': id, 'date': date};
+    return {
+      'technicianId': technicianId,
+      'time': time,
+      'id': id,
+      'date': date,
+      'isBooked': isBooked,
+      'userId': userId,
+      'bookingId': bookingId
+    };
   }
 }
 

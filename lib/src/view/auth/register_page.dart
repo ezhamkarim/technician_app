@@ -130,17 +130,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                 return;
                               }
                               if (formKey.currentState!.validate()) {
-                                var userModel = UserModel(
-                                    name: nameController.text,
-                                    role: roleSelected.name,
-                                    phoneNumber: phoneNoController.text,
-                                    email: emailController.text);
                                 try {
+                                  var userModel = UserModel(
+                                      id: '',
+                                      name: nameController.text,
+                                      role: roleSelected.name,
+                                      phoneNumber: phoneNoController.text,
+                                      email: emailController.text);
                                   await context.read<AuthService>().signUp(
                                       email: emailController.text,
                                       password: pwController.text,
                                       rootProvider: rootProvider,
                                       userModel: userModel);
+
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       IndexPage.routeName,
                                       ModalRoute.withName(IndexPage.routeName));

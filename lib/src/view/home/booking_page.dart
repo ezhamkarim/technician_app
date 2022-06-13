@@ -152,6 +152,7 @@ class _BookingPageState extends State<BookingPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'Booking.',

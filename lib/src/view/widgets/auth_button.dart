@@ -23,8 +23,8 @@ class AuthButton extends StatelessWidget {
           ? child
           : viewState == ViewState.busy
               ? Container(
-                  width: 18,
-                  height: 18,
+                  width: 24,
+                  height: 24,
                   padding: const EdgeInsets.all(2.0),
                   child: CircularProgressIndicator(
                     color: color,

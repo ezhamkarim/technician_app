@@ -10,6 +10,7 @@ class UserController extends DatabaseService {
 
   Future<void> create(UserModel userModel) async {
     try {
+      userModel.id = uid;
       await userDataCollection.doc(uid).set(userModel.toMap());
     } catch (e) {
       logError('Error create user');

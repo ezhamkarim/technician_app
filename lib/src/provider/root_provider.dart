@@ -7,8 +7,8 @@ import '../model/service_model.dart';
 class RootProvider with ChangeNotifier {
   ViewState _viewState = ViewState.idle;
   UserModel? _technician;
-  final List<Service> _services = [];
-
+  List<Service> _services = [];
+  double _total = 0;
   set setState(ViewState viewState) {
     _viewState = viewState;
 
@@ -22,14 +22,26 @@ class RootProvider with ChangeNotifier {
 
   set addService(Service service) {
     _services.add(service);
+    _total = _services.fold<double>(
+        0, (previousValue, element) => previousValue + element.price);
     notifyListeners();
   }
 
   set removeService(String id) {
     _services.removeWhere((element) => element.id == id);
+    _total = _services.fold<double>(
+        0, (previousValue, element) => previousValue + element.price);
     notifyListeners();
   }
 
+  void resetNotifier() {
+    _technician = null;
+    _services = [];
+    _total = 0;
+    notifyListeners();
+  }
+
+  double get total => _total;
   ViewState get viewState => _viewState;
 
   UserModel? get technician => _technician;

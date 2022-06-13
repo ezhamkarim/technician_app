@@ -2,12 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:technician_app/src/model/base_model.dart';
 import 'package:technician_app/src/model/request_model.dart';
 import 'package:technician_app/src/model/service_model.dart';
+import 'package:technician_app/src/model/time_slot_model.dart';
 
 class Booking implements BaseModel {
   String id;
   List<Service> services;
   DateTime dateTime;
-  String timeSlotId;
+  List<TimeSlot> timeSlot;
   double total;
   List<Request> requests;
   String status;
@@ -20,7 +21,7 @@ class Booking implements BaseModel {
       {required this.id,
       required this.services,
       required this.dateTime,
-      required this.timeSlotId,
+      required this.timeSlot,
       required this.total,
       required this.requests,
       required this.status,
@@ -32,11 +33,12 @@ class Booking implements BaseModel {
     var data = documentSnapshot.data() as Map<String, dynamic>;
     var services = data['services'] as List;
     var _requests = data['requests'] as List;
+    var _timeSlot = data['timeSlot'] as List;
     return Booking(
         id: data['id'],
         services: services.map((e) => Service.fromObj(e)).toList(),
         dateTime: data['dateTime'].toDate(),
-        timeSlotId: data['timeSlotId'],
+        timeSlot: _timeSlot.map((e) => TimeSlot.fromObj(e)).toList(),
         total: data['total'],
         requests: _requests.map((e) => Request.fromObj(e)).toList(),
         status: data['status'],
@@ -52,7 +54,7 @@ class Booking implements BaseModel {
       'id': id,
       'services': services.map((e) => e.toMap()).toList(),
       'dateTime': dateTime,
-      'timeSlotId': timeSlotId,
+      'timeSlot': timeSlot.map((e) => e.toMap()).toList(),
       'total': total,
       'requests': requests.map((e) => e.toMap()).toList(),
       'status': status,

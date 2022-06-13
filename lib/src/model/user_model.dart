@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:technician_app/src/model/base_model.dart';
 
 class UserModel implements BaseModel {
+  String id;
   String name;
   String role;
   String phoneNumber;
@@ -9,7 +10,8 @@ class UserModel implements BaseModel {
   String? pictureLink;
 
   UserModel(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.role,
       required this.phoneNumber,
       required this.email,
@@ -17,6 +19,7 @@ class UserModel implements BaseModel {
   factory UserModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
     return UserModel(
+        id: data['id'],
         name: data['name'],
         role: data['role'],
         phoneNumber: data['phoneNumber'],
@@ -27,6 +30,7 @@ class UserModel implements BaseModel {
   @override
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'role': role,
       'phoneNumber': phoneNumber,
