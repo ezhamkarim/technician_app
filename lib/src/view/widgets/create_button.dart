@@ -12,13 +12,17 @@ class CreateButton extends StatefulWidget {
 class _CreateButtonState extends State<CreateButton> {
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: widget.onPressed,
-      icon: const FaIcon(
-        FontAwesomeIcons.plus,
-        color: Colors.white,
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      child: IconButton(
+        onPressed: widget.onPressed,
+        //disabledColor: Colors.red,
+        icon: const FaIcon(
+          FontAwesomeIcons.plus,
+          color: CustomStyle.primarycolor,
+        ),
+        color: CustomStyle.primarycolor,
       ),
-      color: CustomStyle.primarycolor,
     );
   }
 }

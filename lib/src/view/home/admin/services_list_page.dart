@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:technician_app/src/controller/service_controller.dart';
+import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/model/service_model.dart';
+import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/widgets/create_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
@@ -14,6 +17,7 @@ class ServiceListPage extends StatefulWidget {
 }
 
 class _ServiceListPageState extends State<ServiceListPage> {
+  final serviceController = ServiceController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +44,16 @@ class _ServiceListPageState extends State<ServiceListPage> {
                   ],
                 ),
                 CreateButton(onPressed: () {
-                  Navigator.of(context).pushNamed(ServiceListPage.routeName);
+                  Navigator.of(context).pushNamed(ServicesCreatePage.routeName);
                 })
               ],
             ),
             StreamBuilder<List<Service>>(
-                stream: ServiceController().read(),
+                stream: serviceController.read(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else {
                     if (snapshot.hasData) {
                       var services = snapshot.data!;
                       return ListView.builder(
@@ -55,21 +61,53 @@ class _ServiceListPageState extends State<ServiceListPage> {
                           itemCount: services.length,
                           itemBuilder: (context, i) {
                             return CustomCard(
-                                child: Column(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(services[i].name),
-                                Text(services[i].price.toString()),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(services[i].name),
+                                    Text(services[i].price.toString()),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed(
+                                              ServicesCreatePage.routeName,
+                                              arguments: services[i]);
+                                        },
+                                        icon: const FaIcon(
+                                          FontAwesomeIcons.penToSquare,
+                                          color: Colors.white,
+                                        )),
+                                    IconButton(
+                                        onPressed: () {
+                                          DialogHelper.dialogWithAction(
+                                              context,
+                                              'Delete',
+                                              'Are you sure to delete?',
+                                              onPressed: () async {
+                                            await serviceController
+                                                .delete(services[i]);
+                                            Navigator.of(context).pop();
+                                          });
+                                        },
+                                        icon: const FaIcon(
+                                          FontAwesomeIcons.trash,
+                                          color: Colors.white,
+                                        )),
+                                  ],
+                                ),
                               ],
                             ));
                           });
                     } else {
-                      return Text('Error getting services ${snapshot.error}');
+                      return Text(
+                          'Error getting services has error ${snapshot.hasError}');
                     }
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return const Text('Error getting services');
                   }
                 })
           ],

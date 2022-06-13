@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/service_controller.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/service_model.dart';
+import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../../../style/custom_style.dart';
 
 class ServicesCreatePage extends StatefulWidget {
-  const ServicesCreatePage({Key? key}) : super(key: key);
+  const ServicesCreatePage({Key? key, this.service}) : super(key: key);
   static const routeName = '/index/services/create';
+  final Service? service;
   @override
   State<ServicesCreatePage> createState() => _ServicesCreatePageState();
 }
@@ -19,7 +22,17 @@ class _ServicesCreatePageState extends State<ServicesCreatePage> {
   final servicePriceController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
+  void initState() {
+    if (widget.service != null) {
+      serviceNameController.text = widget.service!.name;
+      servicePriceController.text = widget.service!.price.toString();
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var rootProvider = context.watch<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -42,30 +55,68 @@ class _ServicesCreatePageState extends State<ServicesCreatePage> {
                     ),
                   ],
                 ),
-                AuthTextField(textEditingController: serviceNameController),
-                AuthTextField(textEditingController: servicePriceController),
                 const SizedBox(
                   height: 48,
                 ),
-                AuthButton(
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        var service = Service(
-                            id: '',
-                            name: serviceNameController.text,
-                            price: double.parse(servicePriceController.text),
-                            isActive: true);
-                        await ServiceController()
-                            .create(service)
-                            .then((value) => Navigator.of(context).pop())
-                            .catchError((e) {
-                          logError('Error create services');
-                          //TODO: Show error dialog
-                        });
-                      }
-                    },
-                    color: CustomStyle.primarycolor,
-                    child: const Text('Create'))
+                AuthTextField(
+                  textEditingController: serviceNameController,
+                  placeholder: 'Name',
+                ),
+                const SizedBox(
+                  height: 48,
+                ),
+                AuthTextField(
+                    textEditingController: servicePriceController,
+                    placeholder: 'Price'),
+                const SizedBox(
+                  height: 48,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AuthButton(
+                          viewState: rootProvider.viewState,
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              if (widget.service != null) {
+                                var service = Service(
+                                    id: widget.service!.id,
+                                    name: serviceNameController.text,
+                                    price: double.parse(
+                                        servicePriceController.text),
+                                    isActive: true);
+                                await ServiceController()
+                                    .update(service, rootProvider)
+                                    .then(
+                                        (value) => Navigator.of(context).pop())
+                                    .catchError((e) {
+                                  logError('Error create services');
+                                  //TODO: Show error dialog
+                                });
+                              } else {
+                                var service = Service(
+                                    id: '',
+                                    name: serviceNameController.text,
+                                    price: double.parse(
+                                        servicePriceController.text),
+                                    isActive: true);
+                                await ServiceController()
+                                    .create(service, rootProvider)
+                                    .then(
+                                        (value) => Navigator.of(context).pop())
+                                    .catchError((e) {
+                                  logError('Error create services');
+                                  //TODO: Show error dialog
+                                });
+                              }
+                            }
+                          },
+                          color: CustomStyle.primarycolor,
+                          child: Text(
+                              widget.service == null ? 'Create' : 'Update')),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

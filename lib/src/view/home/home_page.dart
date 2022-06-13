@@ -211,6 +211,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildAdminDashboard() {
     var rootProvider = context.read<RootProvider>();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CustomCard(
             onTap: () {
@@ -222,7 +223,11 @@ class _HomePageState extends State<HomePage> {
                   Colors.white, FontSizeEnum.title2, FontWeight.w400),
             )),
         CustomCard(
-          child: const Text('Logout'),
+          child: Text(
+            'Logout',
+            style: CustomStyle.getStyle(
+                Colors.white, FontSizeEnum.title2, FontWeight.w400),
+          ),
           onTap: () async {
             await context
                 .read<AuthService>()

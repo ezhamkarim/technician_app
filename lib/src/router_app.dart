@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:technician_app/src/model/service_model.dart';
 import 'package:technician_app/src/view/auth/landing_page.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/auth/register_page.dart';
@@ -29,7 +30,13 @@ class RouterApp {
           case ServiceListPage.routeName:
             return const ServiceListPage();
           case ServicesCreatePage.routeName:
-            return const ServicesCreatePage();
+            Service? service;
+            if (routeSettings.arguments != null) {
+              service = routeSettings.arguments as Service;
+            }
+            return ServicesCreatePage(
+              service: service,
+            );
           default:
             return ExceptionView(routeName: routeSettings.name!);
         }
