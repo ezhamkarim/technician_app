@@ -9,6 +9,7 @@ import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/style/custom_style.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
+import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
@@ -207,7 +208,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildAdminDashboard() {
-    return Container();
+    var rootProvider = context.read<RootProvider>();
+    return Column(
+      children: [
+        CustomCard(
+            onTap: () {
+              Navigator.of(context).pushNamed(ServiceListPage.routeName);
+            },
+            child: Text(
+              'Services',
+              style: CustomStyle.getStyle(
+                  Colors.white, FontSizeEnum.title2, FontWeight.w400),
+            )),
+        CustomCard(
+          child: const Text('Logout'),
+          onTap: () async {
+            await context
+                .read<AuthService>()
+                .signOut(rootProvider: rootProvider)
+                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                    LoginPage.routeName,
+                    ModalRoute.withName(LoginPage.routeName)));
+          },
+        )
+      ],
+    );
   }
 
   Widget buildCustomerDashboard() {

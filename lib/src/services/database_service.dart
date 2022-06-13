@@ -10,5 +10,7 @@ class DatabaseService {
   final CollectionReference servicesCollection =
       FirebaseFirestore.instance.collection('servicesTechnician');
   final CollectionReference feedbackCollection =
-      FirebaseFirestore.instance.collection('servicesTechnician');
+      FirebaseFirestore.instance.collection('feedbackTechnician');
+  final CollectionReference timeSlotCollection =
+      FirebaseFirestore.instance.collection('timeSlotsTechnician');
 }
