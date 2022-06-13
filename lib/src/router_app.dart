@@ -9,6 +9,7 @@ import 'package:technician_app/src/view/home/customer/booking_create_page.dart';
 import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
 import 'package:technician_app/src/view/home/customer/technician_list_page.dart';
 import 'package:technician_app/src/view/home/index_page.dart';
+import 'package:technician_app/src/view/home/technician/block_appointment_page.dart';
 import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
 import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 
@@ -39,6 +40,8 @@ class RouterApp {
             return const ServiceListPageSelection();
           case ServiceListPage.routeName:
             return const ServiceListPage();
+          case BlockAppointmentPage.routeName:
+            return const BlockAppointmentPage();
           case ServicesCreatePage.routeName:
             Service? service;
             if (routeSettings.arguments != null) {

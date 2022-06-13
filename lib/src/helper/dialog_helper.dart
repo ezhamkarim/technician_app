@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DialogHelper {
-  static dialogWithAction(BuildContext context, String title, String desc,
+  static Future dialogWithAction(
+      BuildContext context, String title, String desc,
       {required void Function() onPressed}) {
-    showDialog(
+    return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
