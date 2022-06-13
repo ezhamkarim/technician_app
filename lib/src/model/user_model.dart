@@ -35,6 +35,11 @@ class UserModel implements BaseModel {
     };
   }
 
+  @override
+  String toString() {
+    return name;
+  }
+
   // Map<String,dynamic> toSignUp(){
   //   return {}
   // }

@@ -36,4 +36,12 @@ class UserController extends DatabaseService {
       return UserModel.fromSnapshot(snapshot);
     });
   }
+
+  Stream<List<UserModel>> readTechnician() {
+    return userDataCollection
+        .where('role', isEqualTo: 'Technician')
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
+  }
 }

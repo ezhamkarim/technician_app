@@ -12,6 +12,7 @@ import 'package:technician_app/src/style/custom_style.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
+import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
@@ -85,7 +86,7 @@ class _HomePageState extends State<HomePage> {
           height: 42,
         ),
         buildTechnicianTopPartial(), buildTechnicianRecentBookings(),
-        buildTechnicianFeedback()
+        buildTechnicianFeedback(), buildReportFeedback()
         // ListView(
         //   shrinkWrap: true,
         //   scrollDirection: Axis.horizontal,
@@ -213,7 +214,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Booking Overview',
+          'Feedbacks',
           style: CustomStyle.getStyle(
               Colors.black, FontSizeEnum.title2, FontWeight.w400),
         ),
@@ -230,6 +231,34 @@ class _HomePageState extends State<HomePage> {
           ),
           onTap: () {
             Navigator.of(context).pushNamed(FeedbackListPage.routeName);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget buildReportFeedback() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Reports',
+          style: CustomStyle.getStyle(
+              Colors.black, FontSizeEnum.title2, FontWeight.w400),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        CustomCard(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Reports'),
+              FaIcon(FontAwesomeIcons.chevronRight)
+            ],
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed(ReportListPage.routeName);
           },
         ),
       ],

@@ -7,20 +7,20 @@ class Feedback implements BaseModel {
   int rating;
   String comment;
   String userId;
-  String techicianId;
+  String technicianId;
   DateTime dateTime;
   Feedback(
       {required this.id,
       required this.comment,
       required this.rating,
-      required this.techicianId,
+      required this.technicianId,
       required this.userId,
       required this.dateTime});
   factory Feedback.fromObj(Map<String, dynamic> json) {
     return Feedback(
         comment: json['comment'],
         rating: json['rating'],
-        techicianId: json['technicianId'],
+        technicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
         id: json['id']);
@@ -32,7 +32,7 @@ class Feedback implements BaseModel {
     return Feedback(
         comment: json['comment'],
         rating: json['rating'],
-        techicianId: json['technicianId'],
+        technicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
         id: json['id']);
@@ -42,7 +42,7 @@ class Feedback implements BaseModel {
     return {
       'rating': rating,
       'comment': comment,
-      'technicianId': techicianId,
+      'technicianId': technicianId,
       'userId': userId,
       'dateTime': dateTime,
       'id': id

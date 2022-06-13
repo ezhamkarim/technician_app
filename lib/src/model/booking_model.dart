@@ -7,7 +7,7 @@ class Booking implements BaseModel {
   String id;
   List<Service> services;
   DateTime dateTime;
-  String timeSlot;
+  String timeSlotId;
   double total;
   List<Request> requests;
   String status;
@@ -20,7 +20,7 @@ class Booking implements BaseModel {
       {required this.id,
       required this.services,
       required this.dateTime,
-      required this.timeSlot,
+      required this.timeSlotId,
       required this.total,
       required this.requests,
       required this.status,
@@ -36,7 +36,7 @@ class Booking implements BaseModel {
         id: data['id'],
         services: services.map((e) => Service.fromObj(e)).toList(),
         dateTime: data['dateTime'].toDate(),
-        timeSlot: data['timeSlot'],
+        timeSlotId: data['timeSlotId'],
         total: data['total'],
         requests: _requests.map((e) => Request.fromObj(e)).toList(),
         status: data['status'],
@@ -52,7 +52,7 @@ class Booking implements BaseModel {
       'id': id,
       'services': services.map((e) => e.toMap()).toList(),
       'dateTime': dateTime,
-      'timeSlot': timeSlot,
+      'timeSlotId': timeSlotId,
       'total': total,
       'requests': requests.map((e) => e.toMap()).toList(),
       'status': status,
