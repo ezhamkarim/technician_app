@@ -52,7 +52,9 @@ class _ServiceListPageState extends State<ServiceListPage> {
                 stream: serviceController.read(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return const CircularProgressIndicator(
+                      color: CustomStyle.primarycolor,
+                    );
                   } else {
                     if (snapshot.hasData) {
                       var services = snapshot.data!;

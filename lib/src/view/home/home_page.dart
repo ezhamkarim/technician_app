@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/user_controller.dart';
 import 'package:technician_app/src/helper/general_helper.dart';
@@ -10,6 +11,7 @@ import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/style/custom_style.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
+import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
@@ -82,7 +84,8 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 42,
         ),
-        buildTechnicianTopPartial(), buildTechnicianRecentBookings()
+        buildTechnicianTopPartial(), buildTechnicianRecentBookings(),
+        buildTechnicianFeedback()
         // ListView(
         //   shrinkWrap: true,
         //   scrollDirection: Axis.horizontal,
@@ -200,6 +203,34 @@ class _HomePageState extends State<HomePage> {
                   child: const CustomCard(child: Text('Hello'))),
             ],
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTechnicianFeedback() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Booking Overview',
+          style: CustomStyle.getStyle(
+              Colors.black, FontSizeEnum.title2, FontWeight.w400),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        CustomCard(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text('Feedbacks'),
+              FaIcon(FontAwesomeIcons.chevronRight)
+            ],
+          ),
+          onTap: () {
+            Navigator.of(context).pushNamed(FeedbackListPage.routeName);
+          },
         ),
       ],
     );

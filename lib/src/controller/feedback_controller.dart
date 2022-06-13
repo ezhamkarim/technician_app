@@ -18,6 +18,7 @@ class FeedbackController extends DatabaseService {
 
   Stream<List<Feedback>> read({String? query}) {
     return feedbackCollection
+        .where('technicianId', isEqualTo: query)
         .orderBy('dateTime', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {

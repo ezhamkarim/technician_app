@@ -6,6 +6,8 @@ import 'package:technician_app/src/view/auth/register_page.dart';
 import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/index_page.dart';
+import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
+import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 
 import 'view/auth/auth_wrapper.dart';
 import 'view/exception_view.dart';
@@ -36,6 +38,10 @@ class RouterApp {
             return ServicesCreatePage(
               service: service,
             );
+          case FeedbackListPage.routeName:
+            return const FeedbackListPage();
+          case ReportListPage.routeName:
+            return const ReportListPage();
           default:
             return ExceptionView(routeName: routeSettings.name!);
         }
