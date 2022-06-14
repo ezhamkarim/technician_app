@@ -335,19 +335,6 @@ class _HomePageState extends State<HomePage> {
               style: CustomStyle.getStyle(
                   Colors.white, FontSizeEnum.title2, FontWeight.w400),
             )),
-            AuthButton(
-                onPressed: () async {
-                  await context
-                      .read<AuthService>()
-                      .signOut(
-                        rootProvider: rootProvider,
-                      )
-                      .then((value) => Navigator.of(context)
-                          .pushNamedAndRemoveUntil(LoginPage.routeName,
-                              ModalRoute.withName(LoginPage.routeName)));
-                },
-                color: CustomStyle.primarycolor,
-                child: const Text('Logout'))
           ],
         )
       ],

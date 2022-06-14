@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:technician_app/src/view/widgets/auth_button.dart';
 
 import '../../../style/custom_style.dart';
 
@@ -27,6 +28,10 @@ class ReportListPage extends StatelessWidget {
                 ),
               ],
             ),
+            AuthButton(
+                onPressed: () async {},
+                color: CustomStyle.primarycolor,
+                child: const Text('Generate Daily'))
           ],
         ),
       )),

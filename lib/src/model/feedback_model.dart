@@ -9,13 +9,16 @@ class Feedback implements BaseModel {
   String userId;
   String technicianId;
   DateTime dateTime;
+  String bookingId;
+
   Feedback(
       {required this.id,
       required this.comment,
       required this.rating,
       required this.technicianId,
       required this.userId,
-      required this.dateTime});
+      required this.dateTime,
+      required this.bookingId});
   factory Feedback.fromObj(Map<String, dynamic> json) {
     return Feedback(
         comment: json['comment'],
@@ -23,7 +26,8 @@ class Feedback implements BaseModel {
         technicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
-        id: json['id']);
+        id: json['id'],
+        bookingId: json['bookingId']);
   }
 
   factory Feedback.fromSnapshot(DocumentSnapshot documentSnapshot) {
@@ -35,7 +39,8 @@ class Feedback implements BaseModel {
         technicianId: json['technicianId'],
         userId: json['userId'],
         dateTime: json['dateTime'].toDate(),
-        id: json['id']);
+        id: json['id'],
+        bookingId: json['bookingId']);
   }
   @override
   Map<String, dynamic> toMap() {
@@ -45,7 +50,8 @@ class Feedback implements BaseModel {
       'technicianId': technicianId,
       'userId': userId,
       'dateTime': dateTime,
-      'id': id
+      'id': id,
+      'bookingId': bookingId
     };
   }
 }

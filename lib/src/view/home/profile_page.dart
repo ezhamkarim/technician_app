@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Home.',
+              'Profile.',
               style: CustomStyle.getStyle(
                   Colors.black, FontSizeEnum.title, FontWeight.w900),
             ),

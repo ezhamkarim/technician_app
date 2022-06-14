@@ -8,6 +8,7 @@ import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
 import 'package:technician_app/src/view/home/customer/booking_create_page.dart';
+import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
 import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
 import 'package:technician_app/src/view/home/customer/technician_list_page.dart';
 import 'package:technician_app/src/view/home/index_page.dart';
@@ -58,6 +59,16 @@ class RouterApp {
               booking: booking!,
               role: role,
             );
+          case FeedbackListPage.routeName:
+            return const FeedbackListPage();
+          case FeedbackCreatePage.routeName:
+            Booking? booking;
+            if (routeSettings.arguments != null) {
+              booking = routeSettings.arguments as Booking;
+            }
+            return FeedbackCreatePage(
+              booking: booking!,
+            );
           case ServicesCreatePage.routeName:
             Service? service;
             if (routeSettings.arguments != null) {
@@ -66,8 +77,6 @@ class RouterApp {
             return ServicesCreatePage(
               service: service,
             );
-          case FeedbackListPage.routeName:
-            return const FeedbackListPage();
           case ReportListPage.routeName:
             return const ReportListPage();
           default:

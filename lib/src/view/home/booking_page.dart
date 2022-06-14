@@ -235,10 +235,19 @@ class _BookingPageState extends State<BookingPage> {
                         height: 16,
                       ),
                       ListView.builder(
+                        physics: const ClampingScrollPhysics(),
                         itemCount: bookingHistory.length,
                         shrinkWrap: true,
                         itemBuilder: (context, i) {
                           return CustomCard(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  BookingDescriptionPage.routeName,
+                                  arguments: {
+                                    'booking': bookingInProgress[i],
+                                    'role': Role.technician
+                                  });
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -296,6 +305,15 @@ class _BookingPageState extends State<BookingPage> {
               } else {
                 if (snapshot.hasData) {
                   var booking = snapshot.data!;
+                  List<Booking> bookingRecent = [];
+                  List<Booking> bookingHistory = [];
+                  try {
+                    bookingRecent.add(booking.last);
+                    booking.removeLast();
+
+                    bookingHistory = booking;
+                  } catch (e) {}
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -312,20 +330,89 @@ class _BookingPageState extends State<BookingPage> {
                         child: Scrollbar(
                           isAlwaysShown: true,
                           controller: scrollController,
-                          child: ListView(
+                          child: ListView.builder(
+                            itemCount: bookingRecent.length,
+                            itemBuilder: (context, i) {
+                              return SizedBox(
+                                  width: SizeHelper(context).scaledWidth() - 64,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          BookingDescriptionPage.routeName,
+                                          arguments: {
+                                            'booking': bookingRecent[i],
+                                            'role': Role.customer
+                                          });
+                                    },
+                                    child: CustomCard(
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  bookingRecent[i]
+                                                      .services[0]
+                                                      .name,
+                                                  style: CustomStyle.getStyle(
+                                                      Colors.white,
+                                                      FontSizeEnum.content,
+                                                      FontWeight.bold)),
+                                              Text(
+                                                  bookingRecent[i]
+                                                      .technicianName,
+                                                  style: CustomStyle.getStyle(
+                                                      Colors.white,
+                                                      FontSizeEnum.content2,
+                                                      FontWeight.normal)),
+                                            ],
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const FaIcon(
+                                                      FontAwesomeIcons.phone,
+                                                      color: Colors.white,
+                                                    )),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .solidMessage,
+                                                      color: Colors.white,
+                                                    ))
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )),
+                                  ));
+                            },
                             controller: scrollController,
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                            children: [
-                              SizedBox(
-                                  width: SizeHelper(context).scaledWidth() - 64,
-                                  child:
-                                      const CustomCard(child: Text('Hello'))),
-                              SizedBox(
-                                  width: SizeHelper(context).scaledWidth() - 64,
-                                  child:
-                                      const CustomCard(child: Text('Hello'))),
-                            ],
+                            // children: [
+                            //   SizedBox(
+                            //       width: SizeHelper(context).scaledWidth() - 64,
+                            //       child:
+                            //           const CustomCard(child: Text('Hello'))),
+                            //   SizedBox(
+                            //       width: SizeHelper(context).scaledWidth() - 64,
+                            //       child:
+                            //           const CustomCard(child: Text('Hello'))),
+                            // ],
                           ),
                         ),
                       ),
@@ -333,9 +420,46 @@ class _BookingPageState extends State<BookingPage> {
                         height: 32,
                       ),
                       Text(
-                        'History',
+                        'Other',
                         style: CustomStyle.getStyle(
                             Colors.black, FontSizeEnum.title2, FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ListView.builder(
+                        itemCount: bookingHistory.length,
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, i) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  BookingDescriptionPage.routeName,
+                                  arguments: {
+                                    'booking': bookingHistory[i],
+                                    'role': Role.customer
+                                  });
+                            },
+                            child: CustomCard(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(bookingHistory[i].services[0].name,
+                                      style: CustomStyle.getStyle(
+                                          Colors.white,
+                                          FontSizeEnum.content,
+                                          FontWeight.bold)),
+                                  const FaIcon(
+                                    FontAwesomeIcons.chevronRight,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   );
@@ -345,16 +469,6 @@ class _BookingPageState extends State<BookingPage> {
                 }
               }
             }),
-        const SizedBox(
-          height: 16,
-        ),
-        ListView(
-          shrinkWrap: true,
-          children: const [
-            CustomCard(child: Text('Hello')),
-            CustomCard(child: Text('Hello')),
-          ],
-        ),
       ],
     );
   }

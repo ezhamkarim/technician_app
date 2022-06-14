@@ -7,6 +7,7 @@ import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
@@ -86,7 +87,8 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                   endDate: booking.estimateTime))
                             ],
                           ),
-                          booking.status == 'COMPLETED'
+                          booking.status == 'COMPLETED' ||
+                                  widget.role == Role.customer
                               ? Container()
                               : OutlinedButton(
                                   style: OutlinedButton.styleFrom(
@@ -126,7 +128,8 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                       FontSizeEnum.content, FontWeight.bold))
                             ],
                           )),
-                          booking.status == 'COMPLETED'
+                          booking.status == 'COMPLETED' ||
+                                  widget.role == Role.customer
                               ? Container()
                               : Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -158,7 +161,27 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                         //     booking, rootProvider);
                                       },
                                       child: const Text('Update Status')),
+                                ),
+                          booking.status == 'COMPLETED' &&
+                                  widget.role == Role.customer &&
+                                  booking.isFeedback == false
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        primary: CustomStyle.primarycolor,
+                                        side: const BorderSide(
+                                            width: 1.0,
+                                            color: CustomStyle.primarycolor),
+                                      ),
+                                      onPressed: () async {
+                                        Navigator.of(context).pushNamed(
+                                            FeedbackCreatePage.routeName,
+                                            arguments: booking);
+                                      },
+                                      child: const Text('Add feedback')),
                                 )
+                              : Container()
                         ],
                       ),
                       Column(
@@ -175,7 +198,10 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                 child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(booking.customerName,
+                                Text(
+                                    widget.role == Role.technician
+                                        ? booking.customerName
+                                        : booking.technicianName,
                                     style: CustomStyle.getStyle(Colors.white,
                                         FontSizeEnum.content, FontWeight.bold)),
                                 Row(
@@ -241,7 +267,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                 FontSizeEnum.content, FontWeight.bold),
                           ),
                           AuthButton(
-                              viewState: rootProvider.viewState,
+                              //viewState: rootProvider.viewState,
                               onPressed: () {},
                               color: CustomStyle.primarycolor,
                               child: const Text('New Info')),
