@@ -9,6 +9,7 @@ import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/home/about_us_page.dart';
+import 'package:technician_app/src/view/home/contact_us_page.dart';
 import 'package:technician_app/src/view/home/technician/block_appointment_page.dart';
 import 'package:path/path.dart' as pathFile;
 import '../../controller/user_controller.dart';
@@ -113,6 +114,29 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget technicianProfile(RootProvider rootProvider, UserModel userModel) {
     return Column(
       children: [
+        UploadAvatar(
+          profilePic: userModel.pictureLink,
+          onTap: () async {
+            FilePickerResult? result = await FilePicker.platform.pickFiles(
+              type: FileType.custom,
+              allowedExtensions: ['jpg', 'png'],
+            );
+            if (result != null) {
+              //File file = File(result.files.single.path);
+              PlatformFile platformFile = result.files.first;
+              setState(() {
+                path = platformFile.path!;
+                dataToUpload['destination'] =
+                    'profilePic/${pathFile.basename(path!)}';
+                dataToUpload['file'] = File(path!);
+              });
+              logError('This is basename :$dataToUpload');
+
+              await UserController(userModel.id)
+                  .updateImage(userModel, dataToUpload);
+            }
+          },
+        ),
         ListTile(
           title: const Text('Name'),
           subtitle: Text(userModel.name),
@@ -155,6 +179,16 @@ class _ProfilePageState extends State<ProfilePage> {
           thickness: 1,
         ),
         ListTile(
+          title: const Text('Contact us'),
+          onTap: () async {
+            Navigator.of(context).pushNamed(ContactUsPage.routeName);
+          },
+        ),
+        const Divider(
+          color: CustomStyle.secondaryColor,
+          thickness: 1,
+        ),
+        ListTile(
           title: const Text('Log out'),
           onTap: () async {
             await context
@@ -178,6 +212,29 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget adminProfile(RootProvider rootProvider, UserModel userModel) {
     return Column(
       children: [
+        UploadAvatar(
+          profilePic: userModel.pictureLink,
+          onTap: () async {
+            FilePickerResult? result = await FilePicker.platform.pickFiles(
+              type: FileType.custom,
+              allowedExtensions: ['jpg', 'png'],
+            );
+            if (result != null) {
+              //File file = File(result.files.single.path);
+              PlatformFile platformFile = result.files.first;
+              setState(() {
+                path = platformFile.path!;
+                dataToUpload['destination'] =
+                    'profilePic/${pathFile.basename(path!)}';
+                dataToUpload['file'] = File(path!);
+              });
+              logError('This is basename :$dataToUpload');
+
+              await UserController(userModel.id)
+                  .updateImage(userModel, dataToUpload);
+            }
+          },
+        ),
         ListTile(
           title: const Text('Name'),
           subtitle: Text(userModel.name),
@@ -203,6 +260,16 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('About us'),
           onTap: () async {
             Navigator.of(context).pushNamed(AboutUsPage.routeName);
+          },
+        ),
+        const Divider(
+          color: CustomStyle.secondaryColor,
+          thickness: 1,
+        ),
+        ListTile(
+          title: const Text('Contact us'),
+          onTap: () async {
+            Navigator.of(context).pushNamed(ContactUsPage.routeName);
           },
         ),
         const Divider(
@@ -281,6 +348,16 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('About us'),
           onTap: () async {
             Navigator.of(context).pushNamed(AboutUsPage.routeName);
+          },
+        ),
+        const Divider(
+          color: CustomStyle.secondaryColor,
+          thickness: 1,
+        ),
+        ListTile(
+          title: const Text('Contact us'),
+          onTap: () async {
+            Navigator.of(context).pushNamed(ContactUsPage.routeName);
           },
         ),
         const Divider(

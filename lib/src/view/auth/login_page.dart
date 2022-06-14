@@ -10,6 +10,7 @@ import 'package:technician_app/src/view/home/index_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
+import '../../helper/dialog_helper.dart';
 import '../../style/custom_style.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,8 +38,19 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/logo.jpg',
+                    height: 80,
+                    width: 80,
+                  ),
+                ],
+              ),
               Text(
-                'Login.',
+                'Welcome to SV Center.',
+                textAlign: TextAlign.center,
                 style: CustomStyle.getStyle(
                     Colors.black, FontSizeEnum.title, FontWeight.bold),
               ),
@@ -96,7 +108,8 @@ class _LoginPageState extends State<LoginPage> {
                                             IndexPage.routeName)))
                                 .catchError((e) {
                               logError('Error login :${e.toString()}');
-                              //TODO: Show dialog error
+                              DialogHelper.dialogWithOutActionWarning(
+                                  context, e.toString());
                             });
                           }
                         },

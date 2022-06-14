@@ -38,7 +38,7 @@ class ServiceController extends DatabaseService {
     } catch (e) {
       logError('Error update service ${e.toString()}');
       rootProvider.setState = ViewState.idle;
-      return;
+      rethrow;
     }
   }
 
@@ -47,7 +47,7 @@ class ServiceController extends DatabaseService {
       await servicesCollection.doc(service.id).delete();
     } catch (e) {
       logError('Error delete service ${e.toString()}');
-      return;
+      rethrow;
     }
   }
 }

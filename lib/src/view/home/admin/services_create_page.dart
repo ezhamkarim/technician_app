@@ -7,6 +7,7 @@ import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
+import '../../../helper/dialog_helper.dart';
 import '../../../style/custom_style.dart';
 
 class ServicesCreatePage extends StatefulWidget {
@@ -91,7 +92,8 @@ class _ServicesCreatePageState extends State<ServicesCreatePage> {
                                         (value) => Navigator.of(context).pop())
                                     .catchError((e) {
                                   logError('Error create services');
-                                  //TODO: Show error dialog
+                                  DialogHelper.dialogWithOutActionWarning(
+                                      context, e.toString());
                                 });
                               } else {
                                 var service = Service(
@@ -106,7 +108,8 @@ class _ServicesCreatePageState extends State<ServicesCreatePage> {
                                         (value) => Navigator.of(context).pop())
                                     .catchError((e) {
                                   logError('Error create services');
-                                  //TODO: Show error dialog
+                                  DialogHelper.dialogWithOutActionWarning(
+                                      context, e.toString());
                                 });
                               }
                             }

@@ -9,6 +9,7 @@ import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/admin/technician_report_page.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
+import 'package:technician_app/src/view/home/contact_us_page.dart';
 import 'package:technician_app/src/view/home/customer/booking_create_page.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
 import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
@@ -98,6 +99,8 @@ class RouterApp {
             );
           case AboutUsPage.routeName:
             return const AboutUsPage();
+          case ContactUsPage.routeName:
+            return const ContactUsPage();
           default:
             return ExceptionView(routeName: routeSettings.name!);
         }

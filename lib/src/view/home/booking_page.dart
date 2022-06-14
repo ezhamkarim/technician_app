@@ -149,7 +149,9 @@ class _BookingPageState extends State<BookingPage> {
                                                       Colors.white,
                                                       FontSizeEnum.content,
                                                       FontWeight.bold)),
-                                              Text('Name',
+                                              Text(
+                                                  bookingInProgress[i]
+                                                      .customerName,
                                                   style: CustomStyle.getStyle(
                                                       Colors.white,
                                                       FontSizeEnum.content2,
