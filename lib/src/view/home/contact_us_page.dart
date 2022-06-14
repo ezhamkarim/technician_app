@@ -39,13 +39,24 @@ class _ContactUsPageState extends State<ContactUsPage> {
             const SizedBox(
               height: 48,
             ),
+            const Text(
+              'If there is any enquiry, please email or call us at:',
+              textAlign: TextAlign.justify,
+            ),
+            const SizedBox(
+              height: 48,
+            ),
             ListTile(
               title: const Text('Email'),
               subtitle: const Text('nazruladamcheah@gmail.com'),
               onTap: () async {
                 launchUrl(Uri.parse(
-                    'mailto:nazruladamcheah@gmail.com?subject=SVCenter&body=Best%one'));
+                    'mailto:nazruladamcheah@gmail.com?subject=SVCente Enquiryr&body=I want try this more!'));
               },
+            ),
+            const Divider(
+              color: CustomStyle.secondaryColor,
+              thickness: 1,
             ),
             ListTile(
               title: const Text('Phone'),
@@ -53,6 +64,10 @@ class _ContactUsPageState extends State<ContactUsPage> {
               onTap: () async {
                 launchUrl(Uri.parse("tel://010-7059843"));
               },
+            ),
+            const Divider(
+              color: CustomStyle.secondaryColor,
+              thickness: 1,
             ),
           ],
         ),

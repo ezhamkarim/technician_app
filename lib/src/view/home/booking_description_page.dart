@@ -8,7 +8,6 @@ import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
-import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
 import '../../model/user_model.dart';
@@ -283,11 +282,11 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                             style: CustomStyle.getStyle(Colors.black,
                                 FontSizeEnum.content, FontWeight.bold),
                           ),
-                          AuthButton(
-                              //viewState: rootProvider.viewState,
-                              onPressed: () {},
-                              color: CustomStyle.primarycolor,
-                              child: const Text('New Info')),
+                          // AuthButton(
+                          //     //viewState: rootProvider.viewState,
+                          //     onPressed: () {},
+                          //     color: CustomStyle.primarycolor,
+                          //     child: const Text('New Info')),
                         ],
                       )
                     ],
