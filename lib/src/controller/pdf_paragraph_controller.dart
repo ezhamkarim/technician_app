@@ -139,7 +139,7 @@ class PdfParagraphController {
     List<Widget> wijet = [];
     double total = 0;
     for (var i = 0; i < booking.length; i++) {
-      wijet.add(buildCustomHeader2(booking[i].id, i + 1));
+      wijet.add(buildCustomHeader2(booking[i].customerName, i + 1));
       wijet.add(buildCustomHeaderService('Service', booking[i].services));
       wijet.add(buildTotal('Total', booking[i].total));
       // wijet.add(Bullet(text: booking[i].id));

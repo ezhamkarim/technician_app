@@ -205,6 +205,32 @@ class _BookingPageState extends State<BookingPage> {
                                                         style: TextButton
                                                             .styleFrom(
                                                                 primary: Colors
+                                                                    .red[100]),
+                                                        onPressed: () {
+                                                          DialogHelper.dialogWithAction(
+                                                              context,
+                                                              'Update appointment',
+                                                              'Delete appointment?',
+                                                              onPressed:
+                                                                  () async {
+                                                            await bookingController
+                                                                .delete(
+                                                                    bookingInProgress[
+                                                                        i]);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          });
+                                                        },
+                                                        child: const Text(
+                                                            'Decline'))
+                                                    : Container(),
+                                                bookingInProgress[i].status ==
+                                                        'WAITING APPROVAL'
+                                                    ? TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                                primary: Colors
                                                                     .white),
                                                         onPressed: () {
                                                           DialogHelper.dialogWithAction(
@@ -228,7 +254,7 @@ class _BookingPageState extends State<BookingPage> {
                                                         },
                                                         child: const Text(
                                                             'Approve'))
-                                                    : Container()
+                                                    : Container(),
                                               ],
                                             )
                                           ],
@@ -465,7 +491,7 @@ class _BookingPageState extends State<BookingPage> {
                         height: 32,
                       ),
                       Text(
-                        'Other',
+                        'History',
                         style: CustomStyle.getStyle(
                             Colors.black, FontSizeEnum.title2, FontWeight.w400),
                       ),

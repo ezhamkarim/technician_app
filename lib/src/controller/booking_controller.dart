@@ -64,4 +64,13 @@ class BookingController extends DatabaseService {
       return;
     }
   }
+
+  Future delete(Booking booking) async {
+    try {
+      await bookingCollection.doc(booking.id).delete();
+    } catch (e) {
+      logError('Error delete service ${e.toString()}');
+      rethrow;
+    }
+  }
 }
