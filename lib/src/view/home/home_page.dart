@@ -85,8 +85,10 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 42,
         ),
-        buildTechnicianTopPartial(), buildTechnicianRecentBookings(),
-        buildTechnicianFeedback(), buildReportFeedback()
+        // buildTechnicianTopPartial(),
+        // buildTechnicianRecentBookings(),
+        buildTechnicianFeedback(),
+        buildReportFeedback()
         // ListView(
         //   shrinkWrap: true,
         //   scrollDirection: Axis.horizontal,
@@ -224,9 +226,13 @@ class _HomePageState extends State<HomePage> {
         CustomCard(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Feedbacks'),
-              FaIcon(FontAwesomeIcons.chevronRight)
+            children: [
+              Text(
+                'Feedbacks',
+                style: CustomStyle.getStyle(
+                    Colors.white, FontSizeEnum.content, FontWeight.w400),
+              ),
+              const FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white)
             ],
           ),
           onTap: () {
@@ -252,9 +258,16 @@ class _HomePageState extends State<HomePage> {
         CustomCard(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Reports'),
-              FaIcon(FontAwesomeIcons.chevronRight)
+            children: [
+              Text(
+                'Reports',
+                style: CustomStyle.getStyle(
+                    Colors.white, FontSizeEnum.content, FontWeight.w400),
+              ),
+              const FaIcon(
+                FontAwesomeIcons.chevronRight,
+                color: Colors.white,
+              )
             ],
           ),
           onTap: () {

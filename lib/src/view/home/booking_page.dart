@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
-import 'package:technician_app/src/services/auth_services.dart';
+import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
 import 'package:technician_app/src/view/widgets/create_button.dart';
 
@@ -14,8 +14,6 @@ import '../../model/booking_model.dart';
 import '../../model/user_model.dart';
 import '../../provider/root_provider.dart';
 import '../../style/custom_style.dart';
-import '../auth/login_page.dart';
-import '../widgets/auth_button.dart';
 import '../widgets/custom_card.dart';
 import 'customer/booking_create_page.dart';
 
@@ -49,26 +47,7 @@ class _BookingPageState extends State<BookingPage> {
                     case Role.customer:
                       return buildCustomerBooking(firebaseUser);
                     default:
-                      return Column(
-                        children: [
-                          Text('HomePage ${userModel.name} '),
-                          AuthButton(
-                              onPressed: () async {
-                                await context
-                                    .read<AuthService>()
-                                    .signOut(
-                                      rootProvider: rootProvider,
-                                    )
-                                    .then((value) => Navigator.of(context)
-                                        .pushNamedAndRemoveUntil(
-                                            LoginPage.routeName,
-                                            ModalRoute.withName(
-                                                LoginPage.routeName)));
-                              },
-                              color: CustomStyle.primarycolor,
-                              child: const Text('Logout'))
-                        ],
-                      );
+                      return Container();
                   }
                 } else {
                   return Text('Error ${snapshot.error}');
@@ -80,6 +59,7 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   Widget buildTechnicianBooking(User user) {
+    var rootProvider = context.read<RootProvider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -174,6 +154,22 @@ class _BookingPageState extends State<BookingPage> {
                                                       Colors.white,
                                                       FontSizeEnum.content2,
                                                       FontWeight.normal)),
+                                              const SizedBox(
+                                                height: 18,
+                                              ),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(18)),
+                                                child: Container(
+                                                  width: 20,
+                                                  height: 20,
+                                                  color: GeneralHelper
+                                                      .getTrueColor(
+                                                          bookingInProgress[i]
+                                                              .status),
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),
@@ -208,7 +204,26 @@ class _BookingPageState extends State<BookingPage> {
                                                             .styleFrom(
                                                                 primary: Colors
                                                                     .white),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          DialogHelper.dialogWithAction(
+                                                              context,
+                                                              'Update appointment',
+                                                              'Approve appointment?',
+                                                              onPressed:
+                                                                  () async {
+                                                            bookingInProgress[i]
+                                                                    .status =
+                                                                'APPROVED';
+                                                            await bookingController
+                                                                .update(
+                                                                    bookingInProgress[
+                                                                        i],
+                                                                    rootProvider);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          });
+                                                        },
                                                         child: const Text(
                                                             'Approve'))
                                                     : Container()
@@ -251,9 +266,28 @@ class _BookingPageState extends State<BookingPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(bookingHistory[i].services[0].name,
-                                    style: CustomStyle.getStyle(Colors.white,
-                                        FontSizeEnum.content, FontWeight.bold)),
+                                Row(
+                                  children: [
+                                    Text(bookingHistory[i].services[0].name,
+                                        style: CustomStyle.getStyle(
+                                            Colors.white,
+                                            FontSizeEnum.content,
+                                            FontWeight.bold)),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(18)),
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        color: GeneralHelper.getTrueColor(
+                                            bookingHistory[i].status),
+                                      ),
+                                    )
+                                  ],
+                                ),
                                 const FaIcon(
                                   FontAwesomeIcons.chevronRight,
                                   color: Colors.white,

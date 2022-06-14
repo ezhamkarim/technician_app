@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:technician_app/src/enum/booking_status_enum.dart';
 
 import '../model/user_model.dart';
@@ -28,6 +29,21 @@ class GeneralHelper {
         return BookingStatus.completed;
       default:
         return BookingStatus.booked;
+    }
+  }
+
+  static Color getTrueColor(String status) {
+    switch (status) {
+      case 'BOOKED':
+        return Colors.red;
+      case 'APPROVED':
+        return Colors.yellow;
+      case 'IN PROGRESS':
+        return Colors.yellow;
+      case 'COMPLETED':
+        return Colors.green;
+      default:
+        return Colors.black;
     }
   }
 

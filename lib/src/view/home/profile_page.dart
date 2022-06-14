@@ -47,11 +47,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         var role = GeneralHelper.getRole(userModel.role);
                         switch (role) {
                           case Role.admin:
-                            return adminProfile(rootProvider);
+                            return adminProfile(rootProvider, userModel);
                           case Role.technician:
-                            return technicianProfile(rootProvider);
+                            return technicianProfile(rootProvider, userModel);
                           case Role.customer:
-                            return customerProfile(rootProvider);
+                            return customerProfile(rootProvider, userModel);
                           default:
                             return Container();
                         }
@@ -100,9 +100,24 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget technicianProfile(RootProvider rootProvider) {
+  Widget technicianProfile(RootProvider rootProvider, UserModel userModel) {
     return Column(
       children: [
+        ListTile(
+          title: const Text('Name'),
+          subtitle: Text(userModel.name),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Email'),
+          subtitle: Text(userModel.email),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Phone Number'),
+          subtitle: Text(userModel.phoneNumber),
+          onTap: () async {},
+        ),
         ListTile(
           title: const Text('Appointment'),
           onTap: () {
@@ -130,9 +145,24 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget adminProfile(RootProvider rootProvider) {
+  Widget adminProfile(RootProvider rootProvider, UserModel userModel) {
     return Column(
       children: [
+        ListTile(
+          title: const Text('Name'),
+          subtitle: Text(userModel.name),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Email'),
+          subtitle: Text(userModel.email),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Phone Number'),
+          subtitle: Text(userModel.phoneNumber),
+          onTap: () async {},
+        ),
         ListTile(
           title: const Text('Log out'),
           onTap: () async {
@@ -154,9 +184,24 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget customerProfile(RootProvider rootProvider) {
+  Widget customerProfile(RootProvider rootProvider, UserModel userModel) {
     return Column(
       children: [
+        ListTile(
+          title: const Text('Name'),
+          subtitle: Text(userModel.name),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Email'),
+          subtitle: Text(userModel.email),
+          onTap: () async {},
+        ),
+        ListTile(
+          title: const Text('Phone Number'),
+          subtitle: Text(userModel.phoneNumber),
+          onTap: () async {},
+        ),
         ListTile(
           title: const Text('Log out'),
           onTap: () async {

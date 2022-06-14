@@ -56,8 +56,20 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                           shrinkWrap: true,
                           itemCount: feedbacks.length,
                           itemBuilder: (context, i) {
-                            return Row(
-                              children: [Text(feedbacks[i].comment)],
+                            return Column(
+                              children: [
+                                ListTile(
+                                  title: Text(feedbacks[i].comment),
+                                  onTap: () {
+                                    // Navigator.of(context).pushNamed(
+                                    //     BlockAppointmentPage.routeName);
+                                  },
+                                ),
+                                const Divider(
+                                  color: CustomStyle.secondaryColor,
+                                  thickness: 1,
+                                ),
+                              ],
                             );
                           });
                     } else {

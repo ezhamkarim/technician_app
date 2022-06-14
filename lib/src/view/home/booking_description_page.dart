@@ -122,10 +122,21 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                           ),
                           CustomCard(
                               child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(booking.status,
                                   style: CustomStyle.getStyle(Colors.white,
-                                      FontSizeEnum.content, FontWeight.bold))
+                                      FontSizeEnum.content, FontWeight.bold)),
+                              ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(18)),
+                                child: Container(
+                                  width: 20,
+                                  height: 20,
+                                  color: GeneralHelper.getTrueColor(
+                                      booking.status),
+                                ),
+                              )
                             ],
                           )),
                           booking.status == 'COMPLETED' ||
@@ -238,6 +249,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                   FontSizeEnum.content, FontWeight.bold),
                             ),
                             ListView.builder(
+                                physics: const ClampingScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: booking.services.length,
                                 itemBuilder: (context, i) {
