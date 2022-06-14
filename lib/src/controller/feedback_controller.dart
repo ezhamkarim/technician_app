@@ -26,4 +26,14 @@ class FeedbackController extends DatabaseService {
       return snapshot.docs.map((obj) => Feedback.fromSnapshot(obj)).toList();
     });
   }
+
+  Stream<List<Feedback>> readAll() {
+    return feedbackCollection
+        .orderBy('dateTime', descending: true)
+        .snapshots()
+        .map((QuerySnapshot snapshot) {
+      logInfo('This is the snapshot :${snapshot.docs.length}');
+      return snapshot.docs.map((obj) => Feedback.fromSnapshot(obj)).toList();
+    });
+  }
 }

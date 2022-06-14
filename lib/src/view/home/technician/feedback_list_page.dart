@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/feedback_controller.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
@@ -9,8 +10,8 @@ import '../../../style/custom_style.dart';
 
 class FeedbackListPage extends StatefulWidget {
   static const routeName = '/index/feedback';
-  const FeedbackListPage({Key? key}) : super(key: key);
-
+  const FeedbackListPage({Key? key, required this.fromAdmin}) : super(key: key);
+  final bool fromAdmin;
   @override
   State<FeedbackListPage> createState() => _FeedbackListPageState();
 }
@@ -43,7 +44,9 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
               ],
             ),
             StreamBuilder<List<feedback.Feedback>>(
-                stream: feedbackController.read(query: firebaseUser.uid),
+                stream: widget.fromAdmin
+                    ? feedbackController.readAll()
+                    : feedbackController.read(query: firebaseUser.uid),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator(
@@ -59,7 +62,22 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                             return Column(
                               children: [
                                 ListTile(
-                                  title: Text(feedbacks[i].comment),
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(feedbacks[i].comment),
+                                      feedbacks[i].rating == 0
+                                          ? const FaIcon(
+                                              FontAwesomeIcons.thumbsUp,
+                                              color: CustomStyle.primarycolor,
+                                            )
+                                          : const FaIcon(
+                                              FontAwesomeIcons.thumbsDown,
+                                              color: CustomStyle.primarycolor,
+                                            )
+                                    ],
+                                  ),
                                   onTap: () {
                                     // Navigator.of(context).pushNamed(
                                     //     BlockAppointmentPage.routeName);

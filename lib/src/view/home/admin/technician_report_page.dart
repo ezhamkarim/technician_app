@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
 import '../../../controller/user_controller.dart';
@@ -73,18 +74,6 @@ class ListTechnicianNew extends StatefulWidget {
 }
 
 class _ListTechnicianNewState extends State<ListTechnicianNew> {
-  String? technicianSelected;
-
-  @override
-  void initState() {
-    var rootProvider = context.read<RootProvider>();
-    if (rootProvider.technician != null) {
-      technicianSelected = rootProvider.technician!.email;
-      // logSuccess('Technician ${technicianSelected!.name}');
-    }
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();
@@ -94,13 +83,22 @@ class _ListTechnicianNewState extends State<ListTechnicianNew> {
         itemCount: widget.technician.length,
         itemBuilder: (context, i) {
           return CustomCard(
+              onTap: () {
+                Navigator.of(context).pushNamed(ReportListPage.routeName,
+                    arguments: widget.technician[i]);
+              },
               child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(widget.technician[i].name),
-              const Icon(FontAwesomeIcons.chevronRight)
-            ],
-          ));
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(widget.technician[i].name,
+                      style: CustomStyle.getStyle(
+                          Colors.white, FontSizeEnum.content, FontWeight.bold)),
+                  const Icon(
+                    FontAwesomeIcons.chevronRight,
+                    color: Colors.white,
+                  )
+                ],
+              ));
         });
   }
 }

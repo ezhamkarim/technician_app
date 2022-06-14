@@ -5,15 +5,22 @@ import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/controller/pdf_controller.dart';
 import 'package:technician_app/src/controller/pdf_paragraph_controller.dart';
 import 'package:technician_app/src/model/booking_model.dart';
+import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 
 import '../../../style/custom_style.dart';
 
-class ReportListPage extends StatelessWidget {
-  const ReportListPage({Key? key}) : super(key: key);
-  static const routeName = '/index/reports';
+class ReportListPage extends StatefulWidget {
+  const ReportListPage({Key? key, this.technician}) : super(key: key);
 
+  static const routeName = '/index/reports';
+  final UserModel? technician;
+  @override
+  State<ReportListPage> createState() => _ReportListPageState();
+}
+
+class _ReportListPageState extends State<ReportListPage> {
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();
@@ -22,8 +29,10 @@ class ReportListPage extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
         child: StreamBuilder<List<Booking>>(
-            stream: BookingController()
-                .readForTechnician(rootProvider.userModel!.id),
+            stream: BookingController().readForTechnician(
+                widget.technician == null
+                    ? rootProvider.userModel!.id
+                    : widget.technician!.id),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator(
@@ -73,11 +82,15 @@ class ReportListPage extends StatelessWidget {
                           Expanded(
                             child: AuthButton(
                                 onPressed: () async {
+                                  String name = '';
+                                  if (widget.technician != null) {
+                                    name = widget.technician!.name;
+                                  }
                                   var date = DateFormat('dd-MM-yyyy')
                                       .format(DateTime.now());
                                   final pdfFile =
                                       await PdfParagraphController.generate(
-                                          'Report until $date ',
+                                          'Report $name until $date ',
                                           bookingHistory);
 
                                   PdfController.openFile(pdfFile);

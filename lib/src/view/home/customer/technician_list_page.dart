@@ -19,6 +19,13 @@ class _TechnicianListPageState extends State<TechnicianListPage> {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
     return Scaffold(
+      // floatingActionButton: ElevatedButton(
+      //   style: ElevatedButton.styleFrom(elevation: 0),
+      //   onPressed: () {
+      //     Navigator.of(context).pop();
+      //   },
+      //   child: const Text('Done'),
+      // ),
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
@@ -54,7 +61,20 @@ class _TechnicianListPageState extends State<TechnicianListPage> {
                           'Error getting feedback has error ${snapshot.hasError}. Error ${snapshot.error}');
                     }
                   }
-                })
+                }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0, primary: CustomStyle.primarycolor),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
           ],
         ),
       )),

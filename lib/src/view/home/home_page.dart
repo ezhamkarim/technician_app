@@ -237,7 +237,8 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           onTap: () {
-            Navigator.of(context).pushNamed(FeedbackListPage.routeName);
+            Navigator.of(context)
+                .pushNamed(FeedbackListPage.routeName, arguments: false);
           },
         ),
       ],
@@ -288,35 +289,64 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.of(context).pushNamed(ServiceListPage.routeName);
             },
-            child: Text(
-              'Services',
-              style: CustomStyle.getStyle(
-                  Colors.white, FontSizeEnum.title2, FontWeight.w400),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Services',
+                  style: CustomStyle.getStyle(
+                      Colors.white, FontSizeEnum.content, FontWeight.w400),
+                ),
+                const FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white)
+              ],
             )),
+        CustomCard(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Feedbacks',
+                style: CustomStyle.getStyle(
+                    Colors.white, FontSizeEnum.content, FontWeight.w400),
+              ),
+              const FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white)
+            ],
+          ),
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(FeedbackListPage.routeName, arguments: true);
+          },
+        ),
         CustomCard(
             onTap: () {
               Navigator.of(context).pushNamed(TechnicianReportPage.routeName);
             },
-            child: Text(
-              'Report',
-              style: CustomStyle.getStyle(
-                  Colors.white, FontSizeEnum.title2, FontWeight.w400),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Report',
+                  style: CustomStyle.getStyle(
+                      Colors.white, FontSizeEnum.content, FontWeight.w400),
+                ),
+                const FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white)
+              ],
             )),
-        CustomCard(
-          child: Text(
-            'Logout',
-            style: CustomStyle.getStyle(
-                Colors.white, FontSizeEnum.title2, FontWeight.w400),
-          ),
-          onTap: () async {
-            await context
-                .read<AuthService>()
-                .signOut(rootProvider: rootProvider)
-                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                    LoginPage.routeName,
-                    ModalRoute.withName(LoginPage.routeName)));
-          },
-        )
+        // CustomCard(
+        //   child: Text(
+        //     'Logout',
+        //     style: CustomStyle.getStyle(
+        //         Colors.white, FontSizeEnum.title2, FontWeight.w400),
+        //   ),
+        //   onTap: () async {
+        //     await context
+        //         .read<AuthService>()
+        //         .signOut(rootProvider: rootProvider)
+        //         .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+        //             LoginPage.routeName,
+        //             ModalRoute.withName(LoginPage.routeName)));
+        //   },
+        // )
       ],
     );
   }

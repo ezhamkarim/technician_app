@@ -68,6 +68,38 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
         date: DateTime.now(),
         isBooked: false,
         bookingId: '',
+        userId: ''),
+    TimeSlot(
+        id: '',
+        technicianId: '',
+        time: '2:00 PM',
+        date: DateTime.now(),
+        isBooked: false,
+        bookingId: '',
+        userId: ''),
+    TimeSlot(
+        id: '',
+        technicianId: '',
+        time: '3:00 PM',
+        date: DateTime.now(),
+        isBooked: false,
+        bookingId: '',
+        userId: ''),
+    TimeSlot(
+        id: '',
+        technicianId: '',
+        time: '4:00 PM',
+        date: DateTime.now(),
+        isBooked: false,
+        bookingId: '',
+        userId: ''),
+    TimeSlot(
+        id: '',
+        technicianId: '',
+        time: '5:00 PM',
+        date: DateTime.now(),
+        isBooked: false,
+        bookingId: '',
         userId: '')
   ];
   DateTime _focusedDay = DateTime.now();

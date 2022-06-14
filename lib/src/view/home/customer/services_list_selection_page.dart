@@ -55,7 +55,20 @@ class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
                           'Error getting services has error ${snapshot.hasError}');
                     }
                   }
-                })
+                }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0, primary: CustomStyle.primarycolor),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
           ],
         ),
       )),
@@ -98,7 +111,7 @@ class _ListServicesState extends State<ListServices> {
       if (states.any(interactiveStates.contains)) {
         return Colors.blue;
       }
-      return Colors.red;
+      return CustomStyle.primarycolor;
     }
 
     var rootProvider = context.read<RootProvider>();

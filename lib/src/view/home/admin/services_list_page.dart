@@ -69,8 +69,20 @@ class _ServiceListPageState extends State<ServiceListPage> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(services[i].name),
-                                    Text(services[i].price.toString()),
+                                    Text(
+                                      services[i].name,
+                                      style: CustomStyle.getStyle(
+                                          Colors.white,
+                                          FontSizeEnum.content2,
+                                          FontWeight.w400),
+                                    ),
+                                    Text(
+                                      services[i].price.toString(),
+                                      style: CustomStyle.getStyle(
+                                          Colors.white,
+                                          FontSizeEnum.content3,
+                                          FontWeight.w400),
+                                    ),
                                   ],
                                 ),
                                 Row(
@@ -111,7 +123,7 @@ class _ServiceListPageState extends State<ServiceListPage> {
                           'Error getting services has error ${snapshot.hasError}');
                     }
                   }
-                })
+                }),
           ],
         ),
       )),

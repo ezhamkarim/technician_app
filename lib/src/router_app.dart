@@ -4,6 +4,7 @@ import 'package:technician_app/src/model/service_model.dart';
 import 'package:technician_app/src/view/auth/landing_page.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/auth/register_page.dart';
+import 'package:technician_app/src/view/home/about_us_page.dart';
 import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/admin/technician_report_page.dart';
@@ -63,7 +64,13 @@ class RouterApp {
               role: role,
             );
           case FeedbackListPage.routeName:
-            return const FeedbackListPage();
+            bool fromAdmin = false;
+            if (routeSettings.arguments != null) {
+              fromAdmin = routeSettings.arguments as bool;
+            }
+            return FeedbackListPage(
+              fromAdmin: fromAdmin,
+            );
 
           case FeedbackCreatePage.routeName:
             Booking? booking;
@@ -82,7 +89,15 @@ class RouterApp {
               service: service,
             );
           case ReportListPage.routeName:
-            return const ReportListPage();
+            UserModel? userModel;
+            if (routeSettings.arguments != null) {
+              userModel = routeSettings.arguments as UserModel;
+            }
+            return ReportListPage(
+              technician: userModel,
+            );
+          case AboutUsPage.routeName:
+            return const AboutUsPage();
           default:
             return ExceptionView(routeName: routeSettings.name!);
         }

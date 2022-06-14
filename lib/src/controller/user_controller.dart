@@ -4,6 +4,8 @@ import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/database_service.dart';
 
+import '../services/storage_services.dart';
+
 class UserController extends DatabaseService {
   final String uid;
 
@@ -21,9 +23,22 @@ class UserController extends DatabaseService {
 
   Future<void> update(UserModel userModel) async {
     try {
-      //TODO: Add upload to firebase storage;
-
       await userDataCollection.doc(uid).set(userModel.toMap());
+    } catch (e) {
+      logError('Error update user');
+      return;
+    }
+  }
+
+  Future<void> updateImage(UserModel userModel, Map data) async {
+    try {
+      final task = await StorageService.uploadFile(
+          destination: data['destination'], file: data['file']);
+      if (task != null) {
+        var profilePicUrl = await task.ref.getDownloadURL();
+        userModel.pictureLink = profilePicUrl;
+        await userDataCollection.doc(uid).set(userModel.toMap());
+      }
     } catch (e) {
       logError('Error update user');
       return;
