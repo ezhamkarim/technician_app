@@ -66,7 +66,8 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(feedbacks[i].comment),
+                                      Expanded(
+                                          child: Text(feedbacks[i].comment)),
                                       feedbacks[i].rating == 0
                                           ? const FaIcon(
                                               FontAwesomeIcons.thumbsUp,
