@@ -35,17 +35,10 @@ class AuthService {
       required RootProvider rootProvider,
       required UserModel userModel}) async {
     try {
-      //var profilePicUrl;
       rootProvider.setState = ViewState.busy;
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // final task = await StorageService.uploadFile(
-      //         destination: data['destination'], file: data['file'])
-      //     .whenComplete(() {});
-      // profilePicUrl = await task.ref.getDownloadURL();
-
       await UserController(userCredential.user!.uid).create(userModel);
-      // throw FirebaseAuthException(code: code)
       rootProvider.setState = ViewState.idle;
       return "Signed Up";
     } on FirebaseAuthException catch (e) {

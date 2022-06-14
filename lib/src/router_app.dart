@@ -6,6 +6,7 @@ import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/auth/register_page.dart';
 import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
+import 'package:technician_app/src/view/home/admin/technician_report_page.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
 import 'package:technician_app/src/view/home/customer/booking_create_page.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
@@ -40,6 +41,8 @@ class RouterApp {
             return const BookingCreatePage();
           case TechnicianListPage.routeName:
             return const TechnicianListPage();
+          case TechnicianReportPage.routeName:
+            return const TechnicianReportPage();
           case ServiceListPageSelection.routeName:
             return const ServiceListPageSelection();
           case ServiceListPage.routeName:
@@ -61,6 +64,7 @@ class RouterApp {
             );
           case FeedbackListPage.routeName:
             return const FeedbackListPage();
+
           case FeedbackCreatePage.routeName:
             Booking? booking;
             if (routeSettings.arguments != null) {

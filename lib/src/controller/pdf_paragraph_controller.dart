@@ -19,30 +19,12 @@ class PdfParagraphController {
   static Future<File> generate(
       String headerTitle, List<Booking> booking) async {
     final pdf = Document();
-
-    // final customFont =
-    //     Font.ttf(await rootBundle.load('assets/OpenSans-Regular.ttf'));
-
     pdf.addPage(
       MultiPage(
         build: (context) => <Widget>[
           buildCustomHeader(headerTitle),
           SizedBox(height: 0.5 * PdfPageFormat.cm),
-          // Paragraph(
-          //   text:
-          //       'This is my custom font that displays also characters such as €, Ł, ...',
-          //   style: TextStyle(font: customFont, fontSize: 20),
-          // ),
-          // buildCustomHeadline(),
-          // buildLink(),
-          // ...booking.map((e) => buildBulletPoints(booking)),
           ...buildBulletPoints(booking),
-          // Header(child: Text('My Headline')),
-          // Paragraph(text: LoremText().paragraph(60)),
-          // Paragraph(text: LoremText().paragraph(60)),
-          // Paragraph(text: LoremText().paragraph(60)),
-          // Paragraph(text: LoremText().paragraph(60)),
-          // Paragraph(text: LoremText().paragraph(60)),
         ],
         footer: (context) {
           final text = 'Page ${context.pageNumber} of ${context.pagesCount}';

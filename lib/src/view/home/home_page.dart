@@ -11,6 +11,7 @@ import 'package:technician_app/src/services/auth_services.dart';
 import 'package:technician_app/src/style/custom_style.dart';
 import 'package:technician_app/src/view/auth/login_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
+import 'package:technician_app/src/view/home/admin/technician_report_page.dart';
 import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
 import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
@@ -289,6 +290,15 @@ class _HomePageState extends State<HomePage> {
             },
             child: Text(
               'Services',
+              style: CustomStyle.getStyle(
+                  Colors.white, FontSizeEnum.title2, FontWeight.w400),
+            )),
+        CustomCard(
+            onTap: () {
+              Navigator.of(context).pushNamed(TechnicianReportPage.routeName);
+            },
+            child: Text(
+              'Report',
               style: CustomStyle.getStyle(
                   Colors.white, FontSizeEnum.title2, FontWeight.w400),
             )),

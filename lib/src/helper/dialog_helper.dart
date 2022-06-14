@@ -3,11 +3,86 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/model/booking_model.dart';
+import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
+import '../controller/user_controller.dart';
 import '../style/custom_style.dart';
 
 class DialogHelper {
+  static Future updateProfilePhone(BuildContext context, String title,
+      String placeHolder, UserModel userModel) {
+    final ctrl = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: AuthTextField(
+              textEditingController: ctrl,
+              placeholder: placeHolder,
+            ),
+            actions: [
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      primary: CustomStyle.primarycolor,
+                      side: const BorderSide(color: CustomStyle.primarycolor)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel')),
+              ElevatedButton(
+                onPressed: () async {
+                  userModel.phoneNumber = ctrl.text;
+                  await UserController(userModel.id).update(userModel);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Okay'),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0, primary: CustomStyle.primarycolor),
+              )
+            ],
+          );
+        });
+  }
+
+  static Future updateProfileName(BuildContext context, String title,
+      String placeHolder, UserModel userModel) {
+    final ctrl = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: AuthTextField(
+              textEditingController: ctrl,
+              placeholder: placeHolder,
+            ),
+            actions: [
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      primary: CustomStyle.primarycolor,
+                      side: const BorderSide(color: CustomStyle.primarycolor)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel')),
+              ElevatedButton(
+                onPressed: () async {
+                  userModel.name = ctrl.text;
+                  await UserController(userModel.id).update(userModel);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Okay'),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0, primary: CustomStyle.primarycolor),
+              )
+            ],
+          );
+        });
+  }
+
   static Future dialogWithAction(
       BuildContext context, String title, String desc,
       {required void Function() onPressed}) {
@@ -19,11 +94,41 @@ class DialogHelper {
             content: Text(desc),
             actions: [
               OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      primary: CustomStyle.primarycolor,
+                      side: const BorderSide(color: CustomStyle.primarycolor)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: const Text('Cancel')),
-              ElevatedButton(onPressed: onPressed, child: const Text('Okay'))
+              ElevatedButton(
+                onPressed: onPressed,
+                child: const Text('Okay'),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0, primary: CustomStyle.primarycolor),
+              )
+            ],
+          );
+        });
+  }
+
+  static Future dialogWithOutActionWarning(
+    BuildContext context,
+    String title,
+  ) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            actions: [
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0, primary: CustomStyle.primarycolor),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Okay'))
             ],
           );
         });

@@ -80,7 +80,7 @@ class _BookingPageState extends State<BookingPage> {
                         .where(
                           (element) =>
                               element.status == 'IN PROGRESS' ||
-                              element.status == 'BOOKED' ||
+                              element.status == 'WAITING APPROVAL' ||
                               element.status == 'APPROVED',
                         )
                         .toList();
@@ -198,7 +198,7 @@ class _BookingPageState extends State<BookingPage> {
                                             Row(
                                               children: [
                                                 bookingInProgress[i].status ==
-                                                        'BOOKED'
+                                                        'WAITING APPROVAL'
                                                     ? TextButton(
                                                         style: TextButton
                                                             .styleFrom(
@@ -259,7 +259,7 @@ class _BookingPageState extends State<BookingPage> {
                               Navigator.of(context).pushNamed(
                                   BookingDescriptionPage.routeName,
                                   arguments: {
-                                    'booking': bookingInProgress[i],
+                                    'booking': bookingHistory[i],
                                     'role': Role.technician
                                   });
                             },
@@ -339,20 +339,29 @@ class _BookingPageState extends State<BookingPage> {
               } else {
                 if (snapshot.hasData) {
                   var booking = snapshot.data!;
-                  List<Booking> bookingRecent = [];
+                  List<Booking> bookingInProgress = [];
                   List<Booking> bookingHistory = [];
                   try {
-                    bookingRecent.add(booking.last);
-                    booking.removeLast();
-
-                    bookingHistory = booking;
+                    bookingInProgress = booking
+                        .where(
+                          (element) =>
+                              element.status == 'IN PROGRESS' ||
+                              element.status == 'WAITING APPROVAL' ||
+                              element.status == 'APPROVED',
+                        )
+                        .toList();
+                    bookingHistory = booking
+                        .where(
+                          (element) => element.status == 'COMPLETED',
+                        )
+                        .toList();
                   } catch (e) {}
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Recent',
+                        'In Progress',
                         style: CustomStyle.getStyle(
                             Colors.black, FontSizeEnum.title2, FontWeight.w400),
                       ),
@@ -365,7 +374,7 @@ class _BookingPageState extends State<BookingPage> {
                           isAlwaysShown: true,
                           controller: scrollController,
                           child: ListView.builder(
-                            itemCount: bookingRecent.length,
+                            itemCount: bookingInProgress.length,
                             itemBuilder: (context, i) {
                               return SizedBox(
                                   width: SizeHelper(context).scaledWidth() - 64,
@@ -374,7 +383,7 @@ class _BookingPageState extends State<BookingPage> {
                                       Navigator.of(context).pushNamed(
                                           BookingDescriptionPage.routeName,
                                           arguments: {
-                                            'booking': bookingRecent[i],
+                                            'booking': bookingInProgress[i],
                                             'role': Role.customer
                                           });
                                     },
@@ -389,7 +398,7 @@ class _BookingPageState extends State<BookingPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                  bookingRecent[i]
+                                                  bookingInProgress[i]
                                                       .services[0]
                                                       .name,
                                                   style: CustomStyle.getStyle(
@@ -397,7 +406,7 @@ class _BookingPageState extends State<BookingPage> {
                                                       FontSizeEnum.content,
                                                       FontWeight.bold)),
                                               Text(
-                                                  bookingRecent[i]
+                                                  bookingInProgress[i]
                                                       .technicianName,
                                                   style: CustomStyle.getStyle(
                                                       Colors.white,

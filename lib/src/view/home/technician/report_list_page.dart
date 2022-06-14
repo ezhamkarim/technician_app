@@ -39,7 +39,7 @@ class ReportListPage extends StatelessWidget {
                         .where(
                           (element) =>
                               element.status == 'IN PROGRESS' ||
-                              element.status == 'BOOKED' ||
+                              element.status == 'WAITING APPROVAL' ||
                               element.status == 'APPROVED',
                         )
                         .toList();

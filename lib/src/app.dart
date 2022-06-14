@@ -74,7 +74,6 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 primaryColor: CustomStyle.primarycolor,
                 fontFamily: GoogleFonts.inter().fontFamily),
-            darkTheme: ThemeData.dark(),
             themeMode: settingsController.themeMode,
 
             // Define a function to handle named routes in order to support
@@ -86,3 +85,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// 1. log masuk
+// 2. pendaftaran
+// 3. Tempahan untuk dua2 pelanggan dengan pekerja
+// 4. History appointment
+// 5. status update progess untuk dua2 pelanggan dengan pekerja
+// 6. jana laporan belah admin tu

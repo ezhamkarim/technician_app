@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/home/technician/block_appointment_page.dart';
@@ -106,7 +107,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Name'),
           subtitle: Text(userModel.name),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfileName(
+                context, 'Update Name', 'Name', userModel);
+          },
         ),
         ListTile(
           title: const Text('Email'),
@@ -116,7 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Phone Number'),
           subtitle: Text(userModel.phoneNumber),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfilePhone(
+                context, 'Update Phone', 'Phone', userModel);
+          },
         ),
         ListTile(
           title: const Text('Appointment'),
@@ -151,7 +158,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Name'),
           subtitle: Text(userModel.name),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfileName(
+                context, 'Update Name', 'Name', userModel);
+          },
         ),
         ListTile(
           title: const Text('Email'),
@@ -161,7 +171,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Phone Number'),
           subtitle: Text(userModel.phoneNumber),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfilePhone(
+                context, 'Update Phone', 'Phone', userModel);
+          },
         ),
         ListTile(
           title: const Text('Log out'),
@@ -190,7 +203,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Name'),
           subtitle: Text(userModel.name),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfileName(
+                context, 'Update Name', 'Name', userModel);
+          },
         ),
         ListTile(
           title: const Text('Email'),
@@ -200,7 +216,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Phone Number'),
           subtitle: Text(userModel.phoneNumber),
-          onTap: () async {},
+          onTap: () async {
+            DialogHelper.updateProfilePhone(
+                context, 'Update Phone', 'Phone', userModel);
+          },
         ),
         ListTile(
           title: const Text('Log out'),

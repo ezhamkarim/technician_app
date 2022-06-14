@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/roles_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
@@ -29,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   List<Roles> roles = [
     Roles(name: 'Customer'),
     Roles(name: 'Technician'),
-    Roles(name: 'Admin')
+    // Roles(name: 'Admin')
   ];
   @override
   Widget build(BuildContext context) {
@@ -126,7 +127,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             viewState: rootProvider.viewState,
                             onPressed: () async {
                               if (pwController.text != rePwController.text) {
-                                //TODO: Show dialog
+                                DialogHelper.dialogWithOutActionWarning(
+                                    context, 'Password not match');
                                 return;
                               }
                               if (formKey.currentState!.validate()) {
@@ -148,7 +150,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ModalRoute.withName(IndexPage.routeName));
                                 } catch (e) {
                                   logError('Error login $e');
-                                  //TODO: Show dialog error;
+                                  DialogHelper.dialogWithOutActionWarning(
+                                      context, e.toString());
                                 }
                               }
                             },

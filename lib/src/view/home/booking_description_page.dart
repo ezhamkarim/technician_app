@@ -27,7 +27,12 @@ class BookingDescriptionPage extends StatefulWidget {
 
 class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
   final bookingController = BookingController();
-  List<String> status = ['BOOKED', 'APPROVED', 'IN PROGRESS', 'COMPLETED'];
+  List<String> status = [
+    'WAITING APPROVAL',
+    'APPROVED',
+    'IN PROGRESS',
+    'COMPLETED'
+  ];
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();

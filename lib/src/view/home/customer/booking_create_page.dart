@@ -319,7 +319,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                                 timeSlot: [],
                                 total: rootProvider.total,
                                 requests: [],
-                                status: 'BOOKED',
+                                status: 'WAITING APPROVAL',
                                 isFeedback: false,
                                 feedbackId: '',
                                 technicianId: rootProvider.technician!.id,

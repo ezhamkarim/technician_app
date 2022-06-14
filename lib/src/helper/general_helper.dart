@@ -19,8 +19,8 @@ class GeneralHelper {
 
   static BookingStatus getColor(String role) {
     switch (role) {
-      case 'BOOKED':
-        return BookingStatus.booked;
+      case 'WAITING APPROVAL':
+        return BookingStatus.waitingApproval;
       case 'APPROVED':
         return BookingStatus.approved;
       case 'IN PROGRESS':
@@ -28,13 +28,13 @@ class GeneralHelper {
       case 'COMPLETED':
         return BookingStatus.completed;
       default:
-        return BookingStatus.booked;
+        return BookingStatus.waitingApproval;
     }
   }
 
   static Color getTrueColor(String status) {
     switch (status) {
-      case 'BOOKED':
+      case 'WAITING APPROVAL':
         return Colors.red;
       case 'APPROVED':
         return Colors.yellow;
