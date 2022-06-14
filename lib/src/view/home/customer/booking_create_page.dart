@@ -308,6 +308,8 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
 
                             if (selectedTimeSlots.isEmpty) return;
                             var bookingModel = Booking(
+                                customerName:
+                                    rootProvider.userModel?.name ?? '',
                                 customerId: firebaseUser.uid,
                                 estimateTime:
                                     DateTime.now().add(const Duration(days: 2)),
@@ -321,6 +323,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                                 isFeedback: false,
                                 feedbackId: '',
                                 technicianId: rootProvider.technician!.id,
+                                technicianName: rootProvider.technician!.name,
                                 phoneNumberTechnician:
                                     rootProvider.technician!.phoneNumber);
                             var bookingResult = await bookingController.create(

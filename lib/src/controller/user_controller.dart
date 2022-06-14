@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/user_model.dart';
+import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/database_service.dart';
 
 class UserController extends DatabaseService {
@@ -29,12 +30,14 @@ class UserController extends DatabaseService {
     }
   }
 
-  Stream<UserModel> read() {
+  Stream<UserModel> read(RootProvider rootProvider) {
     return userDataCollection
         .doc(uid)
         .snapshots()
         .map((DocumentSnapshot snapshot) {
-      return UserModel.fromSnapshot(snapshot);
+      var user = UserModel.fromSnapshot(snapshot);
+      rootProvider.setUser = user;
+      return user;
     });
   }
 

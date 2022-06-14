@@ -9,6 +9,13 @@ class RootProvider with ChangeNotifier {
   UserModel? _technician;
   List<Service> _services = [];
   double _total = 0;
+  UserModel? _userModel;
+
+  set setUser(UserModel userModel) {
+    _userModel = userModel;
+    notifyListeners();
+  }
+
   set setState(ViewState viewState) {
     _viewState = viewState;
 
@@ -41,6 +48,7 @@ class RootProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  UserModel? get userModel => _userModel;
   double get total => _total;
   ViewState get viewState => _viewState;
 

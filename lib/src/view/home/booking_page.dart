@@ -38,7 +38,7 @@ class _BookingPageState extends State<BookingPage> {
         padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
         child: Column(children: [
           StreamBuilder<UserModel>(
-              stream: UserController(firebaseUser.uid).read(),
+              stream: UserController(firebaseUser.uid).read(rootProvider),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var userModel = snapshot.data!;
@@ -146,7 +146,10 @@ class _BookingPageState extends State<BookingPage> {
                                     onTap: () {
                                       Navigator.of(context).pushNamed(
                                           BookingDescriptionPage.routeName,
-                                          arguments: bookingInProgress[i]);
+                                          arguments: {
+                                            'booking': bookingInProgress[i],
+                                            'role': Role.technician
+                                          });
                                     },
                                     child: CustomCard(
                                         child: Row(

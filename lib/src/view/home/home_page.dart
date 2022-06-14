@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
       padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
       child: StreamBuilder<UserModel>(
-          stream: UserController(firebaseUser.uid).read(),
+          stream: UserController(firebaseUser.uid).read(rootProvider),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var userModel = snapshot.data!;

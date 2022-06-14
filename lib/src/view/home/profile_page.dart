@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
             firebaseUser == null
                 ? Container()
                 : StreamBuilder<UserModel>(
-                    stream: UserController(firebaseUser.uid).read(),
+                    stream: UserController(firebaseUser.uid).read(rootProvider),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         var userModel = snapshot.data!;

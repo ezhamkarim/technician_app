@@ -15,6 +15,7 @@ import 'package:technician_app/src/view/home/technician/block_appointment_page.d
 import 'package:technician_app/src/view/home/technician/feedback_list_page.dart';
 import 'package:technician_app/src/view/home/technician/report_list_page.dart';
 
+import 'model/user_model.dart';
 import 'view/auth/auth_wrapper.dart';
 import 'view/exception_view.dart';
 
@@ -46,10 +47,17 @@ class RouterApp {
             return const BlockAppointmentPage();
           case BookingDescriptionPage.routeName:
             Booking? booking;
-            if (routeSettings.arguments != null) {
-              booking = routeSettings.arguments as Booking;
-            }
-            return BookingDescriptionPage(booking: booking!);
+            Role role;
+
+            var arg = routeSettings.arguments as Map<String, dynamic>;
+
+            booking = arg['booking'];
+            role = arg['role'];
+
+            return BookingDescriptionPage(
+              booking: booking!,
+              role: role,
+            );
           case ServicesCreatePage.routeName:
             Service? service;
             if (routeSettings.arguments != null) {

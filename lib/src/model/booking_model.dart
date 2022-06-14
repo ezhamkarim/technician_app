@@ -15,8 +15,10 @@ class Booking implements BaseModel {
   bool isFeedback;
   String feedbackId;
   String technicianId;
+  String technicianName;
   String phoneNumberTechnician;
   String customerId;
+  String customerName;
   DateTime estimateTime;
   Booking(
       {required this.id,
@@ -28,9 +30,11 @@ class Booking implements BaseModel {
       required this.status,
       required this.isFeedback,
       required this.feedbackId,
+      required this.technicianName,
       required this.technicianId,
       required this.phoneNumberTechnician,
       required this.customerId,
+      required this.customerName,
       required this.estimateTime});
   factory Booking.fromSnapshot(DocumentSnapshot documentSnapshot) {
     var data = documentSnapshot.data() as Map<String, dynamic>;
@@ -50,7 +54,9 @@ class Booking implements BaseModel {
         technicianId: data['technicianId'],
         phoneNumberTechnician: data['phoneNumberTechnician'],
         customerId: data['customerId'],
-        estimateTime: data['estimateTime'].toDate());
+        estimateTime: data['estimateTime'].toDate(),
+        technicianName: data['technicianName'],
+        customerName: data['customerName']);
   }
 
   @override
@@ -68,7 +74,9 @@ class Booking implements BaseModel {
       'technicianId': technicianId,
       'phoneNumberTechnician': phoneNumberTechnician,
       'customerId': customerId,
-      'estimateTime': estimateTime
+      'estimateTime': estimateTime,
+      'technicianName': technicianName,
+      'customerName': customerName
     };
   }
 }
