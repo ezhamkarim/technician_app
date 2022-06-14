@@ -309,6 +309,8 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                             if (selectedTimeSlots.isEmpty) return;
                             var bookingModel = Booking(
                                 customerId: firebaseUser.uid,
+                                estimateTime:
+                                    DateTime.now().add(const Duration(days: 2)),
                                 id: '',
                                 services: rootProvider.services,
                                 dateTime: DateTime.now(),

@@ -2,12 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/services/auth_services.dart';
+import 'package:technician_app/src/view/home/booking_description_page.dart';
 import 'package:technician_app/src/view/widgets/create_button.dart';
 
 import '../../controller/user_controller.dart';
 import '../../helper/general_helper.dart';
 import '../../helper/size_helper.dart';
+import '../../model/booking_model.dart';
 import '../../model/user_model.dart';
 import '../../provider/root_provider.dart';
 import '../../style/custom_style.dart';
@@ -24,6 +27,8 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
+  final bookingController = BookingController();
+  final scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();
@@ -40,9 +45,9 @@ class _BookingPageState extends State<BookingPage> {
                   var role = GeneralHelper.getRole(userModel.role);
                   switch (role) {
                     case Role.technician:
-                      return buildTechnicianBooking();
+                      return buildTechnicianBooking(firebaseUser);
                     case Role.customer:
-                      return buildCustomerBooking();
+                      return buildCustomerBooking(firebaseUser);
                     default:
                       return Column(
                         children: [
@@ -74,80 +79,191 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  Widget buildTechnicianBooking() {
+  Widget buildTechnicianBooking(User user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Booking.',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title, FontWeight.w900),
-        ),
-        const SizedBox(
-          height: 42,
-        ),
-        Text(
-          'In Progress',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title2, FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        SizedBox(
-          height: 120,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [
-              SizedBox(
-                  width: SizeHelper(context).scaledWidth() - 64,
-                  child: const CustomCard(child: Text('Hello'))),
-              SizedBox(
-                  width: SizeHelper(context).scaledWidth() - 64,
-                  child: const CustomCard(child: Text('Hello'))),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 32,
-        ),
-        Text(
-          'History',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title2, FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        ListView(
-          shrinkWrap: true,
-          children: [
-            CustomCard(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Feedbacks'),
-                  FaIcon(FontAwesomeIcons.chevronRight)
-                ],
-              ),
-            ),
-            CustomCard(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Feedbacks'),
-                  FaIcon(FontAwesomeIcons.chevronRight)
-                ],
-              ),
-            ),
-          ],
-        ),
+        StreamBuilder<List<Booking>>(
+            stream: bookingController.readForTechnician(user.uid),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(
+                  color: CustomStyle.primarycolor,
+                );
+              } else {
+                if (snapshot.hasData) {
+                  var booking = snapshot.data!;
+                  List<Booking> bookingInProgress = [];
+                  List<Booking> bookingHistory = [];
+                  try {
+                    bookingInProgress = booking
+                        .where(
+                          (element) =>
+                              element.status == 'IN PROGRESS' ||
+                              element.status == 'BOOKED' ||
+                              element.status == 'APPROVED',
+                        )
+                        .toList();
+                    bookingHistory = booking
+                        .where(
+                          (element) => element.status == 'COMPLETED',
+                        )
+                        .toList();
+                  } catch (e) {}
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Booking.',
+                        style: CustomStyle.getStyle(
+                            Colors.black, FontSizeEnum.title, FontWeight.w900),
+                      ),
+                      const SizedBox(
+                        height: 42,
+                      ),
+                      Text(
+                        'In Progress',
+                        style: CustomStyle.getStyle(
+                            Colors.black, FontSizeEnum.title2, FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 150,
+                        child: Scrollbar(
+                          isAlwaysShown: true,
+                          controller: scrollController,
+                          child: ListView.builder(
+                            itemCount: bookingInProgress.length,
+                            controller: scrollController,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, i) {
+                              return SizedBox(
+                                  width: SizeHelper(context).scaledWidth() - 64,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          BookingDescriptionPage.routeName,
+                                          arguments: bookingInProgress[i]);
+                                    },
+                                    child: CustomCard(
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                  bookingInProgress[i]
+                                                      .services[0]
+                                                      .name,
+                                                  style: CustomStyle.getStyle(
+                                                      Colors.white,
+                                                      FontSizeEnum.content,
+                                                      FontWeight.bold)),
+                                              Text('Name',
+                                                  style: CustomStyle.getStyle(
+                                                      Colors.white,
+                                                      FontSizeEnum.content2,
+                                                      FontWeight.normal)),
+                                            ],
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const FaIcon(
+                                                      FontAwesomeIcons.phone,
+                                                      color: Colors.white,
+                                                    )),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {},
+                                                    icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .solidMessage,
+                                                      color: Colors.white,
+                                                    ))
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                bookingInProgress[i].status ==
+                                                        'BOOKED'
+                                                    ? TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                                primary: Colors
+                                                                    .white),
+                                                        onPressed: () {},
+                                                        child: const Text(
+                                                            'Approve'))
+                                                    : Container()
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    )),
+                                  ));
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        'History',
+                        style: CustomStyle.getStyle(
+                            Colors.black, FontSizeEnum.title2, FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ListView.builder(
+                        itemCount: bookingHistory.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, i) {
+                          return CustomCard(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(bookingHistory[i].services[0].name,
+                                    style: CustomStyle.getStyle(Colors.white,
+                                        FontSizeEnum.content, FontWeight.bold)),
+                                const FaIcon(
+                                  FontAwesomeIcons.chevronRight,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  return Text(
+                      'Error getting services has error ${snapshot.hasError} Error : ${snapshot.error}');
+                }
+              }
+            }),
       ],
     );
   }
 
-  Widget buildCustomerBooking() {
+  Widget buildCustomerBooking(User user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,37 +283,65 @@ class _BookingPageState extends State<BookingPage> {
         const SizedBox(
           height: 42,
         ),
-        Text(
-          'History',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title2, FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        SizedBox(
-          height: 120,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [
-              SizedBox(
-                  width: SizeHelper(context).scaledWidth() - 64,
-                  child: const CustomCard(child: Text('Hello'))),
-              SizedBox(
-                  width: SizeHelper(context).scaledWidth() - 64,
-                  child: const CustomCard(child: Text('Hello'))),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 32,
-        ),
-        Text(
-          'History',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title2, FontWeight.w400),
-        ),
+        StreamBuilder<List<Booking>>(
+            stream: bookingController.readForCustomer(user.uid),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(
+                  color: CustomStyle.primarycolor,
+                );
+              } else {
+                if (snapshot.hasData) {
+                  var booking = snapshot.data!;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Recent',
+                        style: CustomStyle.getStyle(
+                            Colors.black, FontSizeEnum.title2, FontWeight.w400),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 120,
+                        child: Scrollbar(
+                          isAlwaysShown: true,
+                          controller: scrollController,
+                          child: ListView(
+                            controller: scrollController,
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            children: [
+                              SizedBox(
+                                  width: SizeHelper(context).scaledWidth() - 64,
+                                  child:
+                                      const CustomCard(child: Text('Hello'))),
+                              SizedBox(
+                                  width: SizeHelper(context).scaledWidth() - 64,
+                                  child:
+                                      const CustomCard(child: Text('Hello'))),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        'History',
+                        style: CustomStyle.getStyle(
+                            Colors.black, FontSizeEnum.title2, FontWeight.w400),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Text(
+                      'Error getting services has error ${snapshot.hasError} Error : ${snapshot.error}');
+                }
+              }
+            }),
         const SizedBox(
           height: 16,
         ),

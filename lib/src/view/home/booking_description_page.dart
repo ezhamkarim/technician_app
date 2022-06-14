@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
+import 'package:technician_app/src/helper/dialog_helper.dart';
+import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
+import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/view/widgets/custom_card.dart';
 
 import '../../style/custom_style.dart';
 
@@ -15,8 +21,10 @@ class BookingDescriptionPage extends StatefulWidget {
 
 class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
   final bookingController = BookingController();
+  List<String> status = ['BOOKED', 'APPROVED', 'IN PROGRESS', 'COMPLETED'];
   @override
   Widget build(BuildContext context) {
+    var rootProvider = context.read<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -32,6 +40,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                 if (snapshot.hasData) {
                   var booking = snapshot.data!;
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,11 +59,100 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Text(DateFormat('dd/MM/yyyy').format(booking.dateTime)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Estimated Time',
+                                style: CustomStyle.getStyle(Colors.black,
+                                    FontSizeEnum.content, FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(GeneralHelper.calculateTimeDifferenceBetween(
+                                  startDate: booking.dateTime,
+                                  endDate: booking.estimateTime))
+                            ],
+                          ),
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                primary: CustomStyle.primarycolor,
+                                side: const BorderSide(
+                                    width: 1.0,
+                                    color: CustomStyle.primarycolor),
+                              ),
+                              onPressed: () async {
+                                var datePicked = await showDatePicker(
+                                    context: context,
+                                    initialDate: booking.estimateTime,
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2023, 1, 1));
+
+                                if (datePicked == null) return;
+                                booking.estimateTime = datePicked;
+                                await bookingController.update(
+                                    booking, rootProvider);
+                              },
+                              child: const Text('Update'))
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Status',
+                            style: CustomStyle.getStyle(Colors.black,
+                                FontSizeEnum.content, FontWeight.bold),
+                          ),
+                          CustomCard(
+                              child: Row(
+                            children: [
+                              Text(booking.status,
+                                  style: CustomStyle.getStyle(Colors.white,
+                                      FontSizeEnum.content, FontWeight.bold))
+                            ],
+                          )),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  primary: CustomStyle.primarycolor,
+                                  side: const BorderSide(
+                                      width: 1.0,
+                                      color: CustomStyle.primarycolor),
+                                ),
+                                onPressed: () async {
+                                  DialogHelper.dialogUpdateBooking(
+                                      context, 'Update Booking', '', status,
+                                      booking: booking,
+                                      bookingController: bookingController);
+                                  // var datePicked = await showDatePicker(
+                                  //     context: context,
+                                  //     initialDate: booking.estimateTime,
+                                  //     firstDate: DateTime.now(),
+                                  //     lastDate: DateTime(2023, 1, 1));
+
+                                  // if (datePicked == null) return;
+                                  // booking.estimateTime = datePicked;
+                                  // await bookingController.update(
+                                  //     booking, rootProvider);
+                                },
+                                child: const Text('Update')),
+                          )
+                        ],
+                      )
                     ],
                   );
                 } else {
                   return Text(
-                      'Error getting services has error ${snapshot.hasError}');
+                      'Error getting services has error ${snapshot.hasError}, Error : ${snapshot.error}');
                 }
               }
             }),

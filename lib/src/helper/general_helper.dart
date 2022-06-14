@@ -1,3 +1,5 @@
+import 'package:technician_app/src/enum/booking_status_enum.dart';
+
 import '../model/user_model.dart';
 
 class GeneralHelper {
@@ -11,6 +13,36 @@ class GeneralHelper {
         return Role.customer;
       default:
         return Role.technician;
+    }
+  }
+
+  static BookingStatus getColor(String role) {
+    switch (role) {
+      case 'BOOKED':
+        return BookingStatus.booked;
+      case 'APPROVED':
+        return BookingStatus.approved;
+      case 'IN PROGRESS':
+        return BookingStatus.inProgress;
+      case 'COMPLETED':
+        return BookingStatus.completed;
+      default:
+        return BookingStatus.booked;
+    }
+  }
+
+  static String calculateTimeDifferenceBetween(
+      {required DateTime startDate, required DateTime endDate}) {
+    int seconds = endDate.difference(startDate).inSeconds;
+    // if (seconds.isNegative) return 'Delayed';
+    if (seconds < 60) {
+      return '$seconds second';
+    } else if (seconds >= 60 && seconds < 3600) {
+      return '${endDate.difference(startDate).inMinutes.abs()} minute';
+    } else if (seconds >= 3600 && seconds < 86400) {
+      return '${endDate.difference(startDate).inHours} hour';
+    } else {
+      return '${endDate.difference(startDate).inDays} day';
     }
   }
 }

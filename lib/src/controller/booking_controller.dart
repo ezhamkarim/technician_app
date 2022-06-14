@@ -30,7 +30,8 @@ class BookingController extends DatabaseService {
         .orderBy('dateTime', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {
-      logInfo('This is the snapshot :${snapshot.docs.length}');
+      logInfo(
+          'This is the snapshot technician booking :${snapshot.docs.length}');
       return snapshot.docs.map((obj) => Booking.fromSnapshot(obj)).toList();
     });
   }

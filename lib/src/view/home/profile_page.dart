@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.watch<RootProvider>();
-    final firebaseUser = context.watch<User>();
+    final firebaseUser = context.watch<User?>();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(32, 120, 32, 64),
@@ -37,26 +37,28 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 42,
             ),
-            StreamBuilder<UserModel>(
-                stream: UserController(firebaseUser.uid).read(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var userModel = snapshot.data!;
-                    var role = GeneralHelper.getRole(userModel.role);
-                    switch (role) {
-                      case Role.admin:
-                        return adminProfile(rootProvider);
-                      case Role.technician:
-                        return technicianProfile();
-                      case Role.customer:
-                        return customerProfile(rootProvider);
-                      default:
-                        return Container();
-                    }
-                  } else {
-                    return Text('Error ${snapshot.error}');
-                  }
-                }),
+            firebaseUser == null
+                ? Container()
+                : StreamBuilder<UserModel>(
+                    stream: UserController(firebaseUser.uid).read(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var userModel = snapshot.data!;
+                        var role = GeneralHelper.getRole(userModel.role);
+                        switch (role) {
+                          case Role.admin:
+                            return adminProfile(rootProvider);
+                          case Role.technician:
+                            return technicianProfile(rootProvider);
+                          case Role.customer:
+                            return customerProfile(rootProvider);
+                          default:
+                            return Container();
+                        }
+                      } else {
+                        return Text('Error ${snapshot.error}');
+                      }
+                    }),
             // GestureDetector(
             //   onTap: () {
             //     Navigator.of(context).pushNamed(BlockAppointmentPage.routeName);
@@ -98,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget technicianProfile() {
+  Widget technicianProfile(RootProvider rootProvider) {
     return Column(
       children: [
         ListTile(
@@ -110,6 +112,19 @@ class _ProfilePageState extends State<ProfilePage> {
         const Divider(
           color: CustomStyle.secondaryColor,
           thickness: 1,
+        ),
+        ListTile(
+          title: const Text('Log out'),
+          onTap: () async {
+            await context
+                .read<AuthService>()
+                .signOut(
+                  rootProvider: rootProvider,
+                )
+                .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                    LoginPage.routeName,
+                    ModalRoute.withName(LoginPage.routeName)));
+          },
         ),
       ],
     );
