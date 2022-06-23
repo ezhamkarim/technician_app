@@ -54,8 +54,8 @@ class _HomePageState extends State<HomePage> {
                             await context
                                 .read<AuthService>()
                                 .signOut(
-                                  rootProvider: rootProvider,
-                                )
+                                    rootProvider: rootProvider,
+                                    userModel: userModel)
                                 .then((value) => Navigator.of(context)
                                     .pushNamedAndRemoveUntil(
                                         LoginPage.routeName,

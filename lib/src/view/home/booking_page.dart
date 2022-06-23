@@ -202,7 +202,7 @@ class _BookingPageState extends State<BookingPage> {
                                                               peerNickname:
                                                                   bookingInProgress[
                                                                           i]
-                                                                      .customerId));
+                                                                      .customerName));
                                                     },
                                                     icon: const FaIcon(
                                                       FontAwesomeIcons
@@ -471,7 +471,19 @@ class _BookingPageState extends State<BookingPage> {
                                                   width: 8,
                                                 ),
                                                 IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Navigator.of(context).pushNamed(
+                                                          ChatPage.routeName,
+                                                          arguments: ChatPageArguments(
+                                                              peerId: bookingInProgress[
+                                                                      i]
+                                                                  .technicianId,
+                                                              peerAvatar: '',
+                                                              peerNickname:
+                                                                  bookingInProgress[
+                                                                          i]
+                                                                      .technicianName));
+                                                    },
                                                     icon: const FaIcon(
                                                       FontAwesomeIcons
                                                           .solidMessage,

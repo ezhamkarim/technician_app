@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:technician_app/src/controller/user_controller.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/services/firebase_messaging_service.dart';
 
 import '../enum/view_state.dart';
 
@@ -18,9 +19,15 @@ class AuthService {
   }) async {
     try {
       rootProvider.setState = ViewState.busy;
-      await _firebaseAuth.signInWithEmailAndPassword(
+      var credential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+      var userModel =
+          await UserController(credential.user!.uid).read(rootProvider).first;
 
+      userModel.pushToken =
+          await FirebaseMessagingService.getFirebaseToken ?? '';
+
+      await UserController(credential.user!.uid).update(userModel);
       rootProvider.setState = ViewState.idle;
       return "Signed In";
     } on FirebaseAuthException catch (e) {
@@ -47,10 +54,16 @@ class AuthService {
     }
   }
 
-  Future<String> signOut({required RootProvider rootProvider}) async {
+  Future<String> signOut(
+      {required RootProvider rootProvider,
+      required UserModel userModel}) async {
     try {
       rootProvider.setState = ViewState.busy;
+      userModel.pushToken = '';
+      userModel.chatWith = '';
+      await UserController(userModel.id).update(userModel);
       await _firebaseAuth.signOut();
+
       rootProvider.setState = ViewState.idle;
       return "signout";
     } on FirebaseAuthException catch (e) {

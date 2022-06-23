@@ -193,9 +193,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () async {
             await context
                 .read<AuthService>()
-                .signOut(
-                  rootProvider: rootProvider,
-                )
+                .signOut(rootProvider: rootProvider, userModel: userModel)
                 .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
                     LoginPage.routeName,
                     ModalRoute.withName(LoginPage.routeName)));
@@ -281,9 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () async {
             await context
                 .read<AuthService>()
-                .signOut(
-                  rootProvider: rootProvider,
-                )
+                .signOut(rootProvider: rootProvider, userModel: userModel)
                 .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
                     LoginPage.routeName,
                     ModalRoute.withName(LoginPage.routeName)));
@@ -369,9 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
           onTap: () async {
             await context
                 .read<AuthService>()
-                .signOut(
-                  rootProvider: rootProvider,
-                )
+                .signOut(rootProvider: rootProvider, userModel: userModel)
                 .then((value) => Navigator.of(context).pushNamedAndRemoveUntil(
                     LoginPage.routeName,
                     ModalRoute.withName(LoginPage.routeName)));

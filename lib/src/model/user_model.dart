@@ -8,13 +8,16 @@ class UserModel implements BaseModel {
   String phoneNumber;
   String email;
   String? pictureLink;
-
+  String pushToken;
+  String chatWith;
   UserModel(
       {required this.id,
       required this.name,
       required this.role,
       required this.phoneNumber,
       required this.email,
+      required this.pushToken,
+      required this.chatWith,
       this.pictureLink});
   factory UserModel.fromSnapshot(DocumentSnapshot documentSnapshot) {
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
@@ -24,7 +27,9 @@ class UserModel implements BaseModel {
         role: data['role'],
         phoneNumber: data['phoneNumber'],
         email: data['email'],
-        pictureLink: data['pictureLink']);
+        pictureLink: data['pictureLink'],
+        pushToken: data['pushToken'],
+        chatWith: data['chatWith']);
   }
 
   @override
@@ -35,7 +40,9 @@ class UserModel implements BaseModel {
       'role': role,
       'phoneNumber': phoneNumber,
       'email': email,
-      'pictureLink': pictureLink
+      'pictureLink': pictureLink,
+      'pushToken': pushToken,
+      'chatWith': chatWith
     };
   }
 

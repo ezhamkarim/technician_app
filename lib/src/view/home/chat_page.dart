@@ -486,7 +486,7 @@ class ChatPageState extends State<ChatPage> {
                 buildListMessage(),
 
                 // Sticker
-                isShowSticker ? buildSticker() : const SizedBox.shrink(),
+                // isShowSticker ? buildSticker() : const SizedBox.shrink(),
 
                 // Input content
                 buildInput(),
@@ -502,118 +502,118 @@ class ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget buildSticker() {
-    return Expanded(
-      child: Container(
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                TextButton(
-                  onPressed: () => onSendMessage('mimi1', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi1.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi2', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi2.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi3', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi3.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            ),
-            Row(
-              children: <Widget>[
-                TextButton(
-                  onPressed: () => onSendMessage('mimi4', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi4.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi5', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi5.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi6', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi6.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            ),
-            Row(
-              children: <Widget>[
-                TextButton(
-                  onPressed: () => onSendMessage('mimi7', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi7.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi8', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi8.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => onSendMessage('mimi9', TypeMessage.sticker),
-                  child: Image.asset(
-                    'images/mimi9.gif',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            )
-          ],
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        ),
-        decoration: const BoxDecoration(
-            border: Border(top: BorderSide(color: Colors.grey, width: 0.5)),
-            color: Colors.white),
-        padding: const EdgeInsets.all(5),
-        height: 180,
-      ),
-    );
-  }
+  // Widget buildSticker() {
+  //   return Expanded(
+  //     child: Container(
+  //       child: Column(
+  //         children: <Widget>[
+  //           Row(
+  //             children: <Widget>[
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi1', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi1.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi2', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi2.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi3', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi3.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               )
+  //             ],
+  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           ),
+  //           Row(
+  //             children: <Widget>[
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi4', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi4.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi5', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi5.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi6', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi6.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               )
+  //             ],
+  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           ),
+  //           Row(
+  //             children: <Widget>[
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi7', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi7.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi8', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi8.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () => onSendMessage('mimi9', TypeMessage.sticker),
+  //                 child: Image.asset(
+  //                   'images/mimi9.gif',
+  //                   width: 50,
+  //                   height: 50,
+  //                   fit: BoxFit.cover,
+  //                 ),
+  //               )
+  //             ],
+  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           )
+  //         ],
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       ),
+  //       decoration: const BoxDecoration(
+  //           border: Border(top: BorderSide(color: Colors.grey, width: 0.5)),
+  //           color: Colors.white),
+  //       padding: const EdgeInsets.all(5),
+  //       height: 180,
+  //     ),
+  //   );
+  // }
 
   Widget buildLoading() {
     return Positioned(
@@ -651,20 +651,18 @@ class ChatPageState extends State<ChatPage> {
 
           // Edit text
           Flexible(
-            child: Container(
-              child: TextField(
-                onSubmitted: (value) {
-                  onSendMessage(textEditingController.text, TypeMessage.text);
-                },
-                style: const TextStyle(
-                    color: CustomStyle.primarycolor, fontSize: 15),
-                controller: textEditingController,
-                decoration: const InputDecoration.collapsed(
-                  hintText: 'Type your message...',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                focusNode: focusNode,
+            child: TextField(
+              onSubmitted: (value) {
+                onSendMessage(textEditingController.text, TypeMessage.text);
+              },
+              style: const TextStyle(
+                  color: CustomStyle.primarycolor, fontSize: 15),
+              controller: textEditingController,
+              decoration: const InputDecoration.collapsed(
+                hintText: 'Type your message...',
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              focusNode: focusNode,
             ),
           ),
 
