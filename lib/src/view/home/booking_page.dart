@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
+import 'package:technician_app/src/view/home/chat_page.dart';
 import 'package:technician_app/src/view/widgets/create_button.dart';
 
 import '../../controller/user_controller.dart';
@@ -180,7 +181,7 @@ class _BookingPageState extends State<BookingPage> {
                                             Row(
                                               children: [
                                                 IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () async {},
                                                     icon: const FaIcon(
                                                       FontAwesomeIcons.phone,
                                                       color: Colors.white,
@@ -189,7 +190,20 @@ class _BookingPageState extends State<BookingPage> {
                                                   width: 8,
                                                 ),
                                                 IconButton(
-                                                    onPressed: () {},
+                                                    onPressed: () async {
+                                                      Navigator.of(context).pushNamed(
+                                                          ChatPage.routeName,
+                                                          arguments: ChatPageArguments(
+                                                              peerId:
+                                                                  bookingInProgress[
+                                                                          i]
+                                                                      .customerId,
+                                                              peerAvatar: '',
+                                                              peerNickname:
+                                                                  bookingInProgress[
+                                                                          i]
+                                                                      .customerId));
+                                                    },
                                                     icon: const FaIcon(
                                                       FontAwesomeIcons
                                                           .solidMessage,

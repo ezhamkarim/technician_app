@@ -9,6 +9,7 @@ import 'package:technician_app/src/view/home/admin/services_create_page.dart';
 import 'package:technician_app/src/view/home/admin/services_list_page.dart';
 import 'package:technician_app/src/view/home/admin/technician_report_page.dart';
 import 'package:technician_app/src/view/home/booking_description_page.dart';
+import 'package:technician_app/src/view/home/chat_page.dart';
 import 'package:technician_app/src/view/home/contact_us_page.dart';
 import 'package:technician_app/src/view/home/customer/booking_create_page.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
@@ -51,6 +52,10 @@ class RouterApp {
             return const ServiceListPage();
           case BlockAppointmentPage.routeName:
             return const BlockAppointmentPage();
+          case ChatPage.routeName:
+            var arguments = routeSettings.arguments as ChatPageArguments;
+
+            return ChatPage(arguments: arguments);
           case BookingDescriptionPage.routeName:
             Booking? booking;
             Role role;
