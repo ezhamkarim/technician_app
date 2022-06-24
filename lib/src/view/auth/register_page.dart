@@ -6,7 +6,6 @@ import 'package:technician_app/src/model/roles_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
-import 'package:technician_app/src/services/firebase_messaging_service.dart';
 import 'package:technician_app/src/view/widgets/auth_button.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
@@ -135,9 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               if (formKey.currentState!.validate()) {
                                 try {
                                   var userModel = UserModel(
-                                      pushToken: await FirebaseMessagingService
-                                              .getFirebaseToken ??
-                                          '',
+                                      pushToken: '',
                                       id: '',
                                       chatWith: '',
                                       name: nameController.text,

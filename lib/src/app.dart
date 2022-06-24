@@ -33,6 +33,11 @@ class _MyAppState extends State<MyApp> {
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Glue the SettingsController to the MaterialApp.
     //

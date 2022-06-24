@@ -191,6 +191,17 @@ class _BookingPageState extends State<BookingPage> {
                                                 ),
                                                 IconButton(
                                                     onPressed: () async {
+                                                      var userModel =
+                                                          await UserController(
+                                                                  user.uid)
+                                                              .read(
+                                                                  rootProvider)
+                                                              .first;
+                                                      userModel.chatWith =
+                                                          bookingInProgress[i]
+                                                              .customerId;
+                                                      UserController(user.uid)
+                                                          .update(userModel);
                                                       Navigator.of(context).pushNamed(
                                                           ChatPage.routeName,
                                                           arguments: ChatPageArguments(
@@ -352,6 +363,7 @@ class _BookingPageState extends State<BookingPage> {
   }
 
   Widget buildCustomerBooking(User user) {
+    var rootProvider = context.read<RootProvider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -471,7 +483,18 @@ class _BookingPageState extends State<BookingPage> {
                                                   width: 8,
                                                 ),
                                                 IconButton(
-                                                    onPressed: () {
+                                                    onPressed: () async {
+                                                      var userModel =
+                                                          await UserController(
+                                                                  user.uid)
+                                                              .read(
+                                                                  rootProvider)
+                                                              .first;
+                                                      userModel.chatWith =
+                                                          bookingInProgress[i]
+                                                              .technicianId;
+                                                      UserController(user.uid)
+                                                          .update(userModel);
                                                       Navigator.of(context).pushNamed(
                                                           ChatPage.routeName,
                                                           arguments: ChatPageArguments(

@@ -24,8 +24,9 @@ class AuthService {
       var userModel =
           await UserController(credential.user!.uid).read(rootProvider).first;
 
-      userModel.pushToken =
-          await FirebaseMessagingService.getFirebaseToken ?? '';
+      var token = await FirebaseMessagingService.getFirebaseToken ?? '';
+
+      userModel.pushToken = token;
 
       await UserController(credential.user!.uid).update(userModel);
       rootProvider.setState = ViewState.idle;
@@ -33,6 +34,9 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       rootProvider.setState = ViewState.idle;
       throw e.message!;
+    } catch (e) {
+      rootProvider.setState = ViewState.idle;
+      throw e.toString();
     }
   }
 
@@ -51,6 +55,9 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       rootProvider.setState = ViewState.idle;
       throw e.message!;
+    } catch (e) {
+      rootProvider.setState = ViewState.idle;
+      throw e.toString();
     }
   }
 
@@ -69,6 +76,24 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       rootProvider.setState = ViewState.idle;
       throw e.message!;
+    } catch (e) {
+      rootProvider.setState = ViewState.idle;
+      throw e.toString();
+    }
+  }
+
+  Future<bool> sendResetPasswordLink(
+      {required String email, required RootProvider rootProvider}) async {
+    try {
+      rootProvider.setState = ViewState.busy;
+
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+
+      rootProvider.setState = ViewState.idle;
+      return true;
+    } catch (e) {
+      rootProvider.setState = ViewState.idle;
+      return false;
     }
   }
 }
