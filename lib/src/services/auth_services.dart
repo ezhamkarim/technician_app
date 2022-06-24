@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:technician_app/src/controller/user_controller.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/firebase_messaging_service.dart';
@@ -25,7 +26,7 @@ class AuthService {
           await UserController(credential.user!.uid).read(rootProvider).first;
 
       var token = await FirebaseMessagingService.getFirebaseToken ?? '';
-
+      logSuccess('Token : $token');
       userModel.pushToken = token;
 
       await UserController(credential.user!.uid).update(userModel);

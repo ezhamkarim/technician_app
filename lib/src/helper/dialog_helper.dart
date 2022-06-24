@@ -5,9 +5,11 @@ import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
+import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../controller/user_controller.dart';
+import '../model/service_model.dart';
 import '../style/custom_style.dart';
 
 class DialogHelper {
@@ -36,6 +38,39 @@ class DialogHelper {
                 onPressed: () async {
                   userModel.phoneNumber = ctrl.text;
                   await UserController(userModel.id).update(userModel);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Okay'),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0, primary: CustomStyle.primarycolor),
+              )
+            ],
+          );
+        });
+  }
+
+  static Future getAllServices(
+      BuildContext context, String title, String desc, List<Service> services) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              const Text('Services'),
+              ListServices(services: services)
+            ]),
+            actions: [
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      primary: CustomStyle.primarycolor,
+                      side: const BorderSide(color: CustomStyle.primarycolor)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel')),
+              ElevatedButton(
+                onPressed: () async {
                   Navigator.of(context).pop();
                 },
                 child: const Text('Okay'),

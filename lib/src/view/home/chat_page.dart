@@ -160,12 +160,12 @@ class ChatPageState extends State<ChatPage> {
                 ? Container(
                     child: Text(
                       messageChat.content,
-                      style: const TextStyle(color: CustomStyle.primarycolor),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     width: 200,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: CustomStyle.primarycolor,
                         borderRadius: BorderRadius.circular(8)),
                     margin: EdgeInsets.only(
                         bottom: isLastMessageRight(index) ? 20 : 10, right: 10),
@@ -311,7 +311,7 @@ class ChatPageState extends State<ChatPage> {
                           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                           width: 200,
                           decoration: BoxDecoration(
-                              color: CustomStyle.primarycolor,
+                              color: Colors.grey,
                               borderRadius: BorderRadius.circular(8)),
                           margin: const EdgeInsets.only(left: 10),
                         )
@@ -471,9 +471,11 @@ class ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: CustomStyle.primarycolor,
         title: Text(
           widget.arguments.peerNickname,
-          style: const TextStyle(color: CustomStyle.primarycolor),
+          style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -637,17 +639,17 @@ class ChatPageState extends State<ChatPage> {
             ),
             color: Colors.white,
           ),
-          Material(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1),
-              child: IconButton(
-                icon: const Icon(Icons.face),
-                onPressed: getSticker,
-                color: CustomStyle.primarycolor,
-              ),
-            ),
-            color: Colors.white,
-          ),
+          // Material(
+          //   child: Container(
+          //     margin: const EdgeInsets.symmetric(horizontal: 1),
+          //     child: IconButton(
+          //       icon: const Icon(Icons.face),
+          //       onPressed: getSticker,
+          //       color: CustomStyle.primarycolor,
+          //     ),
+          //   ),
+          //   color: Colors.white,
+          // ),
 
           // Edit text
           Flexible(
