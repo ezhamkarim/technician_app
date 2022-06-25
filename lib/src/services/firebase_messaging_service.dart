@@ -22,7 +22,11 @@ class FirebaseMessagingService {
 
   static Future<void> sendMessage(
       String pushTokenCustomer, SendNotification sendNotification) async {
-    await _firebaseMessaging.sendMessage(
-        to: pushTokenCustomer, data: sendNotification.toMap());
+    try {
+      await _firebaseMessaging.sendMessage(
+          to: pushTokenCustomer, data: sendNotification.toMap());
+    } catch (e) {
+      logError('Failed to send message ${e.toString()}');
+    }
   }
 }

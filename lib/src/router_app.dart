@@ -47,7 +47,19 @@ class RouterApp {
           case TechnicianReportPage.routeName:
             return const TechnicianReportPage();
           case ServiceListPageSelection.routeName:
-            return const ServiceListPageSelection();
+            var data = routeSettings.arguments as Map<String, dynamic>?;
+            bool isFromRequest = false;
+            Booking? booking;
+            if (data != null) {
+              isFromRequest = data['fromRequest'];
+
+              booking = data['booking'];
+            }
+
+            return ServiceListPageSelection(
+              fromRequest: isFromRequest,
+              booking: booking,
+            );
           case ServiceListPage.routeName:
             return const ServiceListPage();
           case BlockAppointmentPage.routeName:

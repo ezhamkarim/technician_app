@@ -3,15 +3,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
+import 'package:technician_app/src/controller/user_controller.dart';
 import 'package:technician_app/src/helper/dialog_helper.dart';
 import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
+import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
 import '../../model/user_model.dart';
 import '../../style/custom_style.dart';
+import 'chat_page.dart';
 
 class BookingDescriptionPage extends StatefulWidget {
   const BookingDescriptionPage(
@@ -34,7 +37,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    var rootProvider = context.read<RootProvider>();
+    var rootProvider = context.watch<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -156,6 +159,11 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                             color: CustomStyle.primarycolor),
                                       ),
                                       onPressed: () async {
+                                        var customer = await UserController(
+                                                booking.customerId)
+                                            .read(rootProvider)
+                                            .first;
+
                                         DialogHelper.dialogUpdateBooking(
                                             context,
                                             'Update Booking',
@@ -163,7 +171,8 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                             status,
                                             booking: booking,
                                             bookingController:
-                                                bookingController);
+                                                bookingController,
+                                            customer: customer);
                                         // var datePicked = await showDatePicker(
                                         //     context: context,
                                         //     initialDate: booking.estimateTime,
@@ -231,7 +240,27 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                       width: 8,
                                     ),
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (widget.role == Role.technician) {
+                                            Navigator.of(context).pushNamed(
+                                                ChatPage.routeName,
+                                                arguments: ChatPageArguments(
+                                                    peerId: booking.customerId,
+                                                    peerAvatar: '',
+                                                    peerNickname:
+                                                        booking.customerName));
+                                          } else if (widget.role ==
+                                              Role.customer) {
+                                            Navigator.of(context).pushNamed(
+                                                ChatPage.routeName,
+                                                arguments: ChatPageArguments(
+                                                    peerId:
+                                                        booking.technicianId,
+                                                    peerAvatar: '',
+                                                    peerNickname: booking
+                                                        .technicianName));
+                                          }
+                                        },
                                         icon: const FaIcon(
                                           FontAwesomeIcons.solidMessage,
                                           color: Colors.white,
@@ -271,6 +300,33 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                   );
                                 }),
                           ]),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      booking.status == 'COMPLETED' ||
+                              widget.role == Role.technician
+                          ? Container()
+                          : OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                primary: CustomStyle.primarycolor,
+                                side: const BorderSide(
+                                    width: 1.0,
+                                    color: CustomStyle.primarycolor),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(
+                                    ServiceListPageSelection.routeName,
+                                    arguments: {
+                                      'fromRequest': true,
+                                      'booking': booking
+                                    });
+                                // DialogHelper.getAllServices(
+                                //     context,
+                                //     'Notification',
+                                //     'Select service to reques',
+                                //     rootProvider.services);
+                              },
+                              child: const Text('Request Service')),
                       const SizedBox(
                         height: 18,
                       ),

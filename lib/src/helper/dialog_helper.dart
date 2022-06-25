@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
@@ -9,7 +10,9 @@ import 'package:technician_app/src/view/home/customer/services_list_selection_pa
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../controller/user_controller.dart';
+import '../model/send_notification_model.dart';
 import '../model/service_model.dart';
+import '../services/firebase_messaging_service.dart';
 import '../style/custom_style.dart';
 
 class DialogHelper {
@@ -172,6 +175,7 @@ class DialogHelper {
   static Future dialogUpdateBooking(
       BuildContext context, String title, String desc, List<String> list,
       {required BookingController bookingController,
+      required UserModel customer,
       required Booking booking}) {
     return showDialog(
         context: context,
@@ -206,8 +210,26 @@ class DialogHelper {
                                     ? null
                                     : () async {
                                         booking.status = e;
-                                        await bookingController.update(
-                                            booking, rootProvider);
+                                        await bookingController
+                                            .update(booking, rootProvider)
+                                            .then((value) {
+                                          logSuccess(
+                                              'Customer : ${customer.pushToken}');
+                                        }).catchError((e) {
+                                          logError(
+                                              'Error update status ${e.toString()}');
+                                          DialogHelper
+                                              .dialogWithOutActionWarning(
+                                                  context,
+                                                  'Fail to update status ');
+                                        });
+                                        var sendNotification = SendNotification(
+                                            title: 'Update Status',
+                                            content: 'Hi',
+                                            badge: 'hehe');
+                                        await FirebaseMessagingService
+                                            .sendMessage(customer.pushToken,
+                                                sendNotification);
                                         Navigator.of(context).pop();
                                       },
                               ),

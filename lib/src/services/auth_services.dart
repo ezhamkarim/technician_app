@@ -83,7 +83,7 @@ class AuthService {
     }
   }
 
-  Future<bool> sendResetPasswordLink(
+  Future<String> sendResetPasswordLink(
       {required String email, required RootProvider rootProvider}) async {
     try {
       rootProvider.setState = ViewState.busy;
@@ -91,10 +91,10 @@ class AuthService {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
 
       rootProvider.setState = ViewState.idle;
-      return true;
+      return 'Sent!';
     } catch (e) {
       rootProvider.setState = ViewState.idle;
-      return false;
+      return e.toString();
     }
   }
 }

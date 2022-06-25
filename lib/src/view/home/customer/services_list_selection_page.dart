@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/controller/booking_controller.dart';
+import 'package:technician_app/src/controller/request_controller.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
+import 'package:technician_app/src/model/booking_model.dart';
 
 import '../../../controller/service_controller.dart';
+import '../../../model/request_model.dart';
 import '../../../model/service_model.dart';
 import '../../../provider/root_provider.dart';
 import '../../../style/custom_style.dart';
 
 class ServiceListPageSelection extends StatefulWidget {
-  const ServiceListPageSelection({Key? key}) : super(key: key);
+  const ServiceListPageSelection(
+      {Key? key, this.fromRequest = false, this.booking})
+      : super(key: key);
   static const routeName = '/index/createbooking/services';
-
+  final bool fromRequest;
+  final Booking? booking;
   @override
   State<ServiceListPageSelection> createState() =>
       _ServiceListPageSelectionState();
@@ -17,8 +25,11 @@ class ServiceListPageSelection extends StatefulWidget {
 
 class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
   final serviceController = ServiceController();
+  final requestController = RequestController();
+  final bookingController = BookingController();
   @override
   Widget build(BuildContext context) {
+    var rootProvider = context.read<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -49,6 +60,16 @@ class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
                   } else {
                     if (snapshot.hasData) {
                       var services = snapshot.data!;
+                      if (widget.booking != null) {
+                        for (var i = 0;
+                            i < widget.booking!.services.length;
+                            i++) {
+                          services.removeWhere(
+                            (element) =>
+                                element.id == widget.booking!.services[i].id,
+                          );
+                        }
+                      }
                       return ListServices(services: services);
                     } else {
                       return Text(
@@ -62,7 +83,23 @@ class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       elevation: 0, primary: CustomStyle.primarycolor),
-                  onPressed: () {
+                  onPressed: () async {
+                    if (widget.fromRequest && widget.booking != null) {
+                      var requests = rootProvider.services;
+
+                      await Future.forEach<Service>(requests, (element) async {
+                        var request = Request(
+                            id: '',
+                            description: element.name,
+                            status: 'IN PROGRESS');
+                        widget.booking!.requests.add(request);
+                        await requestController.create(request);
+                      });
+                      widget.booking!.services.addAll(rootProvider.services);
+                      logSuccess('Booking : ${widget.booking!.toMap()}');
+                      await bookingController.update(
+                          widget.booking!, rootProvider);
+                    }
                     Navigator.of(context).pop();
                   },
                   child: const Text('Done'),

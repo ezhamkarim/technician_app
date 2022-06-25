@@ -24,7 +24,7 @@ class _IndexPageState extends State<IndexPage> {
     // var fcmToken = await FirebaseMessagingService.getFirebaseToken;
 
     // logSuccess('FCM Token $fcmToken');
-
+    FirebaseMessagingService.listen();
     FirebaseMessagingService.fcmMessageModel.addListener(() {
       var fcmMessage = FirebaseMessagingService.fcmMessageModel.value;
       if (fcmMessage != null) {

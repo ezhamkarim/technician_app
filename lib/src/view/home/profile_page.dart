@@ -189,6 +189,31 @@ class _ProfilePageState extends State<ProfilePage> {
           thickness: 1,
         ),
         ListTile(
+          title: const Text('Reset Password'),
+          onTap: () async {
+            DialogHelper.dialogWithAction(
+                context, 'Warning', 'Are you sure want to reset password',
+                onPressed: () async {
+              await context
+                  .read<AuthService>()
+                  .sendResetPasswordLink(
+                      email: userModel.email, rootProvider: rootProvider)
+                  .then((value) {
+                Navigator.of(context).pop();
+                return DialogHelper.dialogWithOutActionWarning(
+                    context, 'Succesfully sent!');
+              }).catchError((e) {
+                DialogHelper.dialogWithOutActionWarning(
+                    context, 'Failed to sent');
+              });
+            });
+          },
+        ),
+        const Divider(
+          color: CustomStyle.secondaryColor,
+          thickness: 1,
+        ),
+        ListTile(
           title: const Text('Log out'),
           onTap: () async {
             await context
@@ -354,6 +379,25 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('Contact us'),
           onTap: () async {
             Navigator.of(context).pushNamed(ContactUsPage.routeName);
+          },
+        ),
+        const Divider(
+          color: CustomStyle.secondaryColor,
+          thickness: 1,
+        ),
+        ListTile(
+          title: const Text('Reset Password'),
+          onTap: () async {
+            context
+                .read<AuthService>()
+                .sendResetPasswordLink(
+                    email: userModel.email, rootProvider: rootProvider)
+                .then((value) => DialogHelper.dialogWithOutActionWarning(
+                    context, 'Succesfully sent!'))
+                .catchError((e) {
+              DialogHelper.dialogWithOutActionWarning(
+                  context, 'Failed to sent');
+            });
           },
         ),
         const Divider(
