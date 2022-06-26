@@ -69,7 +69,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         context,
                                         'Reset link sent to email ${emailController.text}'))
                                 .catchError((e) {
-                              logError('Error login :${e.toString()}');
+                              logError('Error reset password :${e.toString()}');
                               DialogHelper.dialogWithOutActionWarning(
                                   context, e.toString());
                             });

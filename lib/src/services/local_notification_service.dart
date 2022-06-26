@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 
 class LocalNotification {
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -25,7 +26,7 @@ class LocalNotification {
     //         AndroidFlutterLocalNotificationsPlugin>()
     //     ?.createNotificationChannel(channel);
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('ic_spr');
+        AndroidInitializationSettings('logo');
 
     IOSInitializationSettings initializationSettingsIOS =
         const IOSInitializationSettings(
@@ -56,25 +57,29 @@ class LocalNotification {
       int i, String? string1, String? string2, String? string3) async {
     //log('Message: $string1');
   }
-  void showNotification(RemoteNotification messages) async {
-    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-      'com.duytq.flutterchatdemo',
-      'Technician App',
-      playSound: true,
-      enableVibration: true,
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-    var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
-
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      messages.title.toString(),
-      messages.body.toString(),
-      platformChannelSpecifics,
-    );
+  void showNotification(RemoteMessage messages) async {
+    try {
+      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+        'com.fyp.technician_app',
+        'Technician App',
+        playSound: true,
+        enableVibration: true,
+        importance: Importance.max,
+        priority: Priority.high,
+      );
+      var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
+      var platformChannelSpecifics = NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics);
+      logSuccess('Show notification');
+      await flutterLocalNotificationsPlugin
+          .show(id, messages.notification!.title.toString(),
+              messages.notification!.body.toString(), platformChannelSpecifics,
+              payload: '')
+          .then((value) => logSuccess('Show then'));
+    } catch (e) {
+      logError('Error show notification ${e.toString()}');
+    }
   }
 }

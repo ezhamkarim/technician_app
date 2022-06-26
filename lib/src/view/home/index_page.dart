@@ -18,7 +18,7 @@ class IndexPage extends StatefulWidget {
 class _IndexPageState extends State<IndexPage> {
   int currentIndex = 0;
   List<Widget> screens = const [HomePage(), BookingPage(), ProfilePage()];
-  LocalNotification localNotification = LocalNotification();
+
   @override
   void initState() {
     // var fcmToken = await FirebaseMessagingService.getFirebaseToken;
@@ -28,7 +28,7 @@ class _IndexPageState extends State<IndexPage> {
     FirebaseMessagingService.fcmMessageModel.addListener(() {
       var fcmMessage = FirebaseMessagingService.fcmMessageModel.value;
       if (fcmMessage != null) {
-        localNotification.showNotification(fcmMessage.message);
+        LocalNotification().showNotification(fcmMessage.message);
       }
     });
     super.initState();

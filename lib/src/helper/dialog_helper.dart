@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -111,6 +112,49 @@ class DialogHelper {
                   userModel.name = ctrl.text;
                   await UserController(userModel.id).update(userModel);
                   Navigator.of(context).pop();
+                },
+                child: const Text('Okay'),
+                style: ElevatedButton.styleFrom(
+                    elevation: 0, primary: CustomStyle.primarycolor),
+              )
+            ],
+          );
+        });
+  }
+
+  static Future updatePassword(
+      BuildContext context, String title, String placeHolder, User user) {
+    final ctrl = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: AuthTextField(
+              textEditingController: ctrl,
+              isObsecure: true,
+              placeholder: placeHolder,
+            ),
+            actions: [
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      primary: CustomStyle.primarycolor,
+                      side: const BorderSide(color: CustomStyle.primarycolor)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel')),
+              ElevatedButton(
+                onPressed: () async {
+                  await user.updatePassword(ctrl.text).then((value) {
+                    Navigator.of(context).pop();
+                    DialogHelper.dialogWithOutActionWarning(
+                        context, 'Succesfully update password');
+                  }).catchError((e) {
+                    Navigator.of(context).pop();
+                    DialogHelper.dialogWithOutActionWarning(
+                        context, e.toString());
+                  });
                 },
                 child: const Text('Okay'),
                 style: ElevatedButton.styleFrom(

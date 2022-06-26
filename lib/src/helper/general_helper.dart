@@ -17,8 +17,8 @@ class GeneralHelper {
     }
   }
 
-  static BookingStatus getColor(String role) {
-    switch (role) {
+  static BookingStatus getStatus(String status) {
+    switch (status) {
       case 'WAITING APPROVAL':
         return BookingStatus.waitingApproval;
       case 'APPROVED':

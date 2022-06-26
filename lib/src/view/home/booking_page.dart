@@ -200,7 +200,8 @@ class _BookingPageState extends State<BookingPage> {
                                                       userModel.chatWith =
                                                           bookingInProgress[i]
                                                               .customerId;
-                                                      UserController(user.uid)
+                                                      await UserController(
+                                                              user.uid)
                                                           .update(userModel);
                                                       Navigator.of(context).pushNamed(
                                                           ChatPage.routeName,
@@ -493,7 +494,8 @@ class _BookingPageState extends State<BookingPage> {
                                                       userModel.chatWith =
                                                           bookingInProgress[i]
                                                               .technicianId;
-                                                      UserController(user.uid)
+                                                      await UserController(
+                                                              user.uid)
                                                           .update(userModel);
                                                       Navigator.of(context).pushNamed(
                                                           ChatPage.routeName,

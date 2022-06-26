@@ -13,10 +13,14 @@ class FirebaseMessagingService {
   static Future<String?> get getFirebaseToken async =>
       await _firebaseMessaging.getToken();
 
-  static void listen() {
+  static void listen() async {
+    logInfo('Listening....');
+    await getFirebaseToken;
     FirebaseMessaging.onMessage.listen((message) {
       logSuccess('on message ${message.notification?.title}');
-      fcmMessageModel.value = FcmMessageModel(0, message.notification!);
+      fcmMessageModel.value = FcmMessageModel(0, message);
+    }, onError: (o, s) {
+      logError('Error listening $o , $s');
     });
   }
 

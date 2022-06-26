@@ -95,7 +95,7 @@ class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
                         widget.booking!.requests.add(request);
                         await requestController.create(request);
                       });
-                      widget.booking!.services.addAll(rootProvider.services);
+                      //  widget.booking!.services.addAll(rootProvider.services);
                       logSuccess('Booking : ${widget.booking!.toMap()}');
                       await bookingController.update(
                           widget.booking!, rootProvider);

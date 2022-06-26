@@ -2,9 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/controller/user_controller.dart';
+import 'package:technician_app/src/enum/booking_status_enum.dart';
 import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/helper/size_helper.dart';
+import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/services/auth_services.dart';
@@ -25,6 +28,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final bookingController = BookingController();
   @override
   Widget build(BuildContext context) {
     var rootProvider = context.read<RootProvider>();
@@ -42,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                 case Role.admin:
                   return buildAdminDashboard();
                 case Role.technician:
-                  return buildTechnicianDashboard();
+                  return buildTechnicianDashboard(userModel);
                 case Role.customer:
                   return buildCustomerDashboard();
                 default:
@@ -74,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
-  Widget buildTechnicianDashboard() {
+  Widget buildTechnicianDashboard(UserModel userModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -86,8 +90,8 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(
           height: 42,
         ),
-        // buildTechnicianTopPartial(),
-        // buildTechnicianRecentBookings(),
+        buildTechnicianTopPartial(userModel),
+        //buildTechnicianRecentBookings(),
         buildTechnicianFeedback(),
         buildReportFeedback()
         // ListView(
@@ -106,79 +110,200 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildTechnicianTopPartial() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Booking Overview',
-          style: CustomStyle.getStyle(
-              Colors.black, FontSizeEnum.title2, FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(children: [
+  Widget buildTechnicianTopPartial(UserModel userModel) {
+    return StreamBuilder<List<Booking>>(
+        stream: bookingController.readForTechnician(userModel.id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var newBooking = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.waitingApproval);
+            var approved = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.approved);
+            var inProgress = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.inProgress);
+            var completed = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.completed);
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  '2',
+                  'Booking Overview',
                   style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.title, FontWeight.bold),
+                      Colors.black, FontSizeEnum.title2, FontWeight.w400),
                 ),
-                Text(
-                  'New',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.content2, FontWeight.w400),
-                )
-              ]),
-              Column(children: [
-                Text(
-                  '12',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.title, FontWeight.bold),
+                const SizedBox(
+                  height: 16,
                 ),
-                Text(
-                  'In Progress',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.content2, FontWeight.w400),
-                )
-              ]),
-              Column(children: [
-                Text(
-                  '6',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.title, FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(children: [
+                        Text(
+                          newBooking.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'New',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          approved.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'Approved',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          inProgress.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'In Progress',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          completed.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'Completed',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                    ],
+                  ),
                 ),
-                Text(
-                  'Completed',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.content2, FontWeight.w400),
+                const SizedBox(
+                  height: 32,
                 )
-              ]),
-              Column(children: [
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error ${snapshot.error}');
+          } else {
+            return const SizedBox(
+                height: 20, width: 20, child: CircularProgressIndicator());
+          }
+        });
+  }
+
+  Widget buildAdminTopPartial() {
+    return StreamBuilder<List<Booking>>(
+        stream: bookingController.readForAdmin(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            var newBooking = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.waitingApproval);
+            var approved = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.approved);
+            var inProgress = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.inProgress);
+            var completed = snapshot.requireData.where((element) =>
+                GeneralHelper.getStatus(element.status) ==
+                BookingStatus.completed);
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  '1',
+                  'Booking Overview',
                   style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.title, FontWeight.bold),
+                      Colors.black, FontSizeEnum.title2, FontWeight.w400),
                 ),
-                Text(
-                  'Delay',
-                  style: CustomStyle.getStyle(
-                      Colors.black, FontSizeEnum.content2, FontWeight.w400),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(children: [
+                        Text(
+                          newBooking.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'New',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          approved.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'Approved',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          inProgress.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'In Progress',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                      Column(children: [
+                        Text(
+                          completed.length.toString(),
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.title, FontWeight.bold),
+                        ),
+                        Text(
+                          'Completed',
+                          style: CustomStyle.getStyle(Colors.black,
+                              FontSizeEnum.content2, FontWeight.w400),
+                        )
+                      ]),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
                 )
-              ]),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 32,
-        )
-      ],
-    );
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error ${snapshot.error}');
+          } else {
+            return const SizedBox(
+                height: 20, width: 20, child: CircularProgressIndicator());
+          }
+        });
   }
 
   Widget buildTechnicianRecentBookings() {
@@ -285,6 +410,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        buildAdminTopPartial(),
         CustomCard(
             onTap: () {
               Navigator.of(context).pushNamed(ServiceListPage.routeName);

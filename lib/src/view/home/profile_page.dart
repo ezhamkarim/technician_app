@@ -319,6 +319,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget customerProfile(RootProvider rootProvider, UserModel userModel) {
+    final firebaseUser = context.watch<User>();
     return Column(
       children: [
         UploadAvatar(
@@ -388,16 +389,24 @@ class _ProfilePageState extends State<ProfilePage> {
         ListTile(
           title: const Text('Reset Password'),
           onTap: () async {
-            context
-                .read<AuthService>()
-                .sendResetPasswordLink(
-                    email: userModel.email, rootProvider: rootProvider)
-                .then((value) => DialogHelper.dialogWithOutActionWarning(
-                    context, 'Succesfully sent!'))
-                .catchError((e) {
-              DialogHelper.dialogWithOutActionWarning(
-                  context, 'Failed to sent');
-            });
+            DialogHelper.updatePassword(
+                context, 'Nofication', 'Password', firebaseUser);
+            // DialogHelper.dialogWithAction(
+            //     context, 'Warning', 'Are you sure want to reset password',
+            //     onPressed: () async {
+            //   await context
+            //       .read<AuthService>()
+            //       .sendResetPasswordLink(
+            //           email: userModel.email, rootProvider: rootProvider)
+            //       .then((value) {
+            //     Navigator.of(context).pop();
+            //     return DialogHelper.dialogWithOutActionWarning(
+            //         context, 'Succesfully sent!');
+            //   }).catchError((e) {
+            //     DialogHelper.dialogWithOutActionWarning(
+            //         context, 'Failed to sent');
+            //   });
+            // });
           },
         ),
         const Divider(

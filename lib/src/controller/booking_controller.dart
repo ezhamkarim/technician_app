@@ -36,9 +36,9 @@ class BookingController extends DatabaseService {
     });
   }
 
-  Stream<List<Booking>> readForAdmin(String status) {
+  Stream<List<Booking>> readForAdmin() {
     return bookingCollection
-        .where('status', isEqualTo: status)
+        // .where('status', isEqualTo: status)
         .orderBy('dateTime', descending: true)
         .snapshots()
         .map((QuerySnapshot snapshot) {

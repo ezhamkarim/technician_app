@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -37,6 +38,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<User>();
     var rootProvider = context.watch<RootProvider>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -240,8 +242,16 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                       width: 8,
                                     ),
                                     IconButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (widget.role == Role.technician) {
+                                            var userModel =
+                                                await UserController(user.uid)
+                                                    .read(rootProvider)
+                                                    .first;
+                                            userModel.chatWith =
+                                                booking.customerId;
+                                            await UserController(user.uid)
+                                                .update(userModel);
                                             Navigator.of(context).pushNamed(
                                                 ChatPage.routeName,
                                                 arguments: ChatPageArguments(
@@ -251,6 +261,14 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                                         booking.customerName));
                                           } else if (widget.role ==
                                               Role.customer) {
+                                            var userModel =
+                                                await UserController(user.uid)
+                                                    .read(rootProvider)
+                                                    .first;
+                                            userModel.chatWith =
+                                                booking.technicianId;
+                                            await UserController(user.uid)
+                                                .update(userModel);
                                             Navigator.of(context).pushNamed(
                                                 ChatPage.routeName,
                                                 arguments: ChatPageArguments(

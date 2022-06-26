@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/controller/pdf_controller.dart';
 import 'package:technician_app/src/controller/pdf_paragraph_controller.dart';
+import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/model/user_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
@@ -57,7 +58,9 @@ class _ReportListPageState extends State<ReportListPage> {
                           (element) => element.status == 'COMPLETED',
                         )
                         .toList();
-                  } catch (e) {}
+                  } catch (e) {
+                    logError('Error get data ${e.toString()}');
+                  }
                   return Column(
                     children: [
                       Row(
@@ -86,17 +89,67 @@ class _ReportListPageState extends State<ReportListPage> {
                                   if (widget.technician != null) {
                                     name = widget.technician!.name;
                                   }
-                                  var date = DateFormat('dd-MM-yyyy')
-                                      .format(DateTime.now());
+                                  final now = DateTime.now();
+                                  var date =
+                                      DateFormat('dd-MM-yyyy').format(now);
+
+                                  final today =
+                                      DateTime(now.year, now.month, now.day);
+                                  var booking = bookingHistory.where((element) {
+                                    final dateToCheck = element.dateTime;
+                                    final aDate = DateTime(dateToCheck.year,
+                                        dateToCheck.month, dateToCheck.day);
+                                    return aDate == today;
+                                  });
                                   final pdfFile =
                                       await PdfParagraphController.generate(
-                                          'Report $name until $date ',
-                                          bookingHistory);
+                                          'Report $name for $date ',
+                                          booking.toList());
 
                                   PdfController.openFile(pdfFile);
                                 },
                                 color: CustomStyle.primarycolor,
-                                child: const Text('Generate Report')),
+                                child: const Text('Generate Report Daily')),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 34,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: AuthButton(
+                                onPressed: () async {
+                                  String name = '';
+                                  if (widget.technician != null) {
+                                    name = widget.technician!.name;
+                                  }
+                                  final now = DateTime.now();
+                                  var date =
+                                      DateFormat('dd-MM-yyyy').format(now);
+
+                                  final oneMonth =
+                                      DateTime(now.year, now.month, now.day)
+                                          .subtract(const Duration(days: 30));
+                                  final dateOneMonth =
+                                      DateFormat('dd-MM-yyyy').format(oneMonth);
+                                  var booking = bookingHistory.where((element) {
+                                    final dateToCheck = element.dateTime;
+                                    final aDate = DateTime(dateToCheck.year,
+                                        dateToCheck.month, dateToCheck.day);
+                                    return aDate.isBefore(now) &&
+                                        aDate.isAfter(oneMonth);
+                                  });
+                                  final pdfFile =
+                                      await PdfParagraphController.generate(
+                                          'Report $name for $date - $dateOneMonth ',
+                                          booking.toList());
+
+                                  PdfController.openFile(pdfFile);
+                                },
+                                color: CustomStyle.primarycolor,
+                                child: const Text('Generate Report Monthly')),
                           ),
                         ],
                       )

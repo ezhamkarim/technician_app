@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:technician_app/src/services/local_notification_service.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -11,6 +12,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await LocalNotification().init();
   final settingsController = SettingsController(SettingsService());
 
   // Load the user's preferred theme while the splash screen is displayed.

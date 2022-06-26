@@ -93,8 +93,27 @@ class AuthService {
       rootProvider.setState = ViewState.idle;
       return 'Sent!';
     } catch (e) {
+      logError('Error sent reset password ${e.toString()}');
       rootProvider.setState = ViewState.idle;
-      return e.toString();
+      throw e.toString();
+    }
+  }
+
+  Future<String> updatePassword(
+      {required User user,
+      required String newPassword,
+      required RootProvider rootProvider}) async {
+    try {
+      rootProvider.setState = ViewState.busy;
+
+      await user.updatePassword(newPassword);
+
+      rootProvider.setState = ViewState.idle;
+      return 'Sent!';
+    } catch (e) {
+      logError('Error sent reset password ${e.toString()}');
+      rootProvider.setState = ViewState.idle;
+      throw e.toString();
     }
   }
 }
