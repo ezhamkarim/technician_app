@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:technician_app/src/controller/booking_controller.dart';
 import 'package:technician_app/src/controller/request_controller.dart';
-import 'package:technician_app/src/helper/log_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 
 import '../../../controller/service_controller.dart';
-import '../../../model/request_model.dart';
 import '../../../model/service_model.dart';
 import '../../../provider/root_provider.dart';
 import '../../../style/custom_style.dart';
@@ -84,22 +82,22 @@ class _ServiceListPageSelectionState extends State<ServiceListPageSelection> {
                   style: ElevatedButton.styleFrom(
                       elevation: 0, primary: CustomStyle.primarycolor),
                   onPressed: () async {
-                    if (widget.fromRequest && widget.booking != null) {
-                      var requests = rootProvider.services;
+                    // if (widget.fromRequest && widget.booking != null) {
+                    //   var requests = rootProvider.services;
 
-                      await Future.forEach<Service>(requests, (element) async {
-                        var request = Request(
-                            id: '',
-                            description: element.name,
-                            status: 'IN PROGRESS');
-                        widget.booking!.requests.add(request);
-                        await requestController.create(request);
-                      });
-                      //  widget.booking!.services.addAll(rootProvider.services);
-                      logSuccess('Booking : ${widget.booking!.toMap()}');
-                      await bookingController.update(
-                          widget.booking!, rootProvider);
-                    }
+                    //   await Future.forEach<Service>(requests, (element) async {
+                    //     var request = Request(
+                    //         id: '',
+                    //         description: element.name,
+                    //         status: 'IN PROGRESS');
+                    //     widget.booking!.requests.add(request);
+                    //     await requestController.create(request);
+                    //   });
+                    //   //  widget.booking!.services.addAll(rootProvider.services);
+                    //   logSuccess('Booking : ${widget.booking!.toMap()}');
+                    //   await bookingController.update(
+                    //       widget.booking!, rootProvider);
+                    // }
                     Navigator.of(context).pop();
                   },
                   child: const Text('Done'),

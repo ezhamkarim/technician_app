@@ -10,7 +10,6 @@ import 'package:technician_app/src/helper/general_helper.dart';
 import 'package:technician_app/src/model/booking_model.dart';
 import 'package:technician_app/src/provider/root_provider.dart';
 import 'package:technician_app/src/view/home/customer/feedback_create_page.dart';
-import 'package:technician_app/src/view/home/customer/services_list_selection_page.dart';
 import 'package:technician_app/src/view/widgets/custom_card.dart';
 
 import '../../model/user_model.dart';
@@ -109,7 +108,8 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                   onPressed: () async {
                                     var datePicked = await showDatePicker(
                                         context: context,
-                                        initialDate: booking.estimateTime,
+                                        initialDate: DateTime.now(),
+                                        currentDate: booking.estimateTime,
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime(2023, 1, 1));
 
@@ -321,30 +321,30 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                       const SizedBox(
                         height: 18,
                       ),
-                      booking.status == 'COMPLETED' ||
-                              widget.role == Role.technician
-                          ? Container()
-                          : OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                primary: CustomStyle.primarycolor,
-                                side: const BorderSide(
-                                    width: 1.0,
-                                    color: CustomStyle.primarycolor),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    ServiceListPageSelection.routeName,
-                                    arguments: {
-                                      'fromRequest': true,
-                                      'booking': booking
-                                    });
-                                // DialogHelper.getAllServices(
-                                //     context,
-                                //     'Notification',
-                                //     'Select service to reques',
-                                //     rootProvider.services);
-                              },
-                              child: const Text('Request Service')),
+                      // booking.status == 'COMPLETED' ||
+                      //         widget.role == Role.technician
+                      //     ? Container()
+                      //     : OutlinedButton(
+                      //         style: OutlinedButton.styleFrom(
+                      //           primary: CustomStyle.primarycolor,
+                      //           side: const BorderSide(
+                      //               width: 1.0,
+                      //               color: CustomStyle.primarycolor),
+                      //         ),
+                      //         onPressed: () {
+                      //           Navigator.of(context).pushNamed(
+                      //               ServiceListPageSelection.routeName,
+                      //               arguments: {
+                      //                 'fromRequest': true,
+                      //                 'booking': booking
+                      //               });
+                      //           // DialogHelper.getAllServices(
+                      //           //     context,
+                      //           //     'Notification',
+                      //           //     'Select service to reques',
+                      //           //     rootProvider.services);
+                      //         },
+                      //         child: const Text('Request Service')),
                       const SizedBox(
                         height: 18,
                       ),
