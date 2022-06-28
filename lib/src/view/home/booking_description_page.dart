@@ -77,6 +77,7 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                         height: 24,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Booking Created',
@@ -87,24 +88,56 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                               .format(booking.dateTime)),
                         ],
                       ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Time Slots',
-                            style: CustomStyle.getStyle(Colors.black,
-                                FontSizeEnum.content, FontWeight.bold),
-                          ),
-                          Column(
-                              children: booking.timeSlot
-                                  .map((e) => Text(
-                                      '${e.time} ${DateFormat('dd/MM/yyyy').format(e.date)}'))
-                                  .toList())
-                        ],
-                      ),
+                      booking.timeSlot.isEmpty
+                          ? Container()
+                          : const SizedBox(
+                              height: 24,
+                            ),
+                      booking.timeSlot.isEmpty
+                          ? Container()
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Time Slots',
+                                  style: CustomStyle.getStyle(Colors.black,
+                                      FontSizeEnum.content, FontWeight.bold),
+                                ),
+                                Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(DateFormat('dd/MM/yyyy')
+                                          .format(booking.timeSlot[0].date)),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Row(
+                                        children: booking.timeSlot
+                                            .map((e) => Card(
+                                                  color:
+                                                      CustomStyle.primarycolor,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      e.time,
+                                                      style:
+                                                          CustomStyle.getStyle(
+                                                              Colors.white,
+                                                              FontSizeEnum
+                                                                  .content2,
+                                                              FontWeight
+                                                                  .normal),
+                                                    ),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                      )
+                                    ])
+                              ],
+                            ),
                       const SizedBox(
                         height: 24,
                       ),

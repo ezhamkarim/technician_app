@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -107,6 +109,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
   DateTime? _selectedDay;
   bool daySelected = false;
   RootProvider? rootProvider;
+  StreamSubscription<List<TimeSlot>>? streamSubscriptionTS;
   // List<LabBookingModel> _getEventsForDay(DateTime? day,
   //     {List<LabBookingModel>? list}) {
   //   // Implementation example
@@ -142,10 +145,10 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
   void _getSelectedDays() {
     var technicianId = rootProvider?.technician;
     if (technicianId == null) return;
-    timeSlotController
+    streamSubscriptionTS = timeSlotController
         .readForBooking(_selectedDay!, technicianId.id)
         .listen((event) {
-      //logInfo('Event $event Focused Day $focusedDay');
+      logInfo('Event $event Focused Day $_selectedDay');
       setState(() {
         List<TimeSlot> tempTemplate = timeSlotsTemplate;
         if (event.isEmpty) {
@@ -169,6 +172,13 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
         }
       });
     });
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await streamSubscriptionTS?.cancel();
+    logSuccess('DISPOSE!');
   }
 
   @override
@@ -371,6 +381,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                             if (bookingResult == null) return;
 
                             for (var i = 0; i < selectedTimeSlots.length; i++) {
+                              selectedTimeSlots[i].isBooked = true;
                               selectedTimeSlots[i].bookingId = bookingResult.id;
                               selectedTimeSlots[i].technicianId =
                                   rootProvider.technician!.id;
@@ -378,14 +389,18 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                                   'Time Slots ${selectedTimeSlots[i].toMap()}');
                             }
 
-                            // await Future.forEach<TimeSlot>(selectedTimeSlots,
-                            //     (item) async {
-                            //   await timeSlotController.create(item);
-                            // });
+                            await Future.forEach<TimeSlot>(selectedTimeSlots,
+                                (item) async {
+                              item.isBooked = true;
+                              var result =
+                                  await timeSlotController.create(item);
+                              if (result == null) {}
+                            });
                             bookingModel.timeSlot = selectedTimeSlots;
-                            // await bookingController.update(
-                            //     bookingModel, rootProvider);
+                            await bookingController.update(
+                                bookingModel, rootProvider);
                             logSuccess('Booking Model ${bookingModel.toMap()}');
+
                             rootProvider.resetNotifier();
                             Navigator.of(context).pop();
                           },

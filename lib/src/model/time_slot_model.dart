@@ -42,6 +42,11 @@ class TimeSlot implements BaseModel {
         bookingId: obj['bookingId']);
   }
   @override
+  String toString() {
+    return time;
+  }
+
+  @override
   Map<String, dynamic> toMap() {
     return {
       'technicianId': technicianId,
