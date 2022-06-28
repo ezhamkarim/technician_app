@@ -11,9 +11,7 @@ import 'package:technician_app/src/view/home/customer/services_list_selection_pa
 import 'package:technician_app/src/view/widgets/auth_textfield.dart';
 
 import '../controller/user_controller.dart';
-import '../model/send_notification_model.dart';
 import '../model/service_model.dart';
-import '../services/firebase_messaging_service.dart';
 import '../style/custom_style.dart';
 
 class DialogHelper {
@@ -267,13 +265,6 @@ class DialogHelper {
                                                   context,
                                                   'Fail to update status ');
                                         });
-                                        var sendNotification = SendNotification(
-                                            title: 'Update Status',
-                                            content: 'Hi',
-                                            badge: 'hehe');
-                                        await FirebaseMessagingService
-                                            .sendMessage(customer.pushToken,
-                                                sendNotification);
                                         Navigator.of(context).pop();
                                       },
                               ),

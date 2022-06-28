@@ -56,6 +56,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
                     if (snapshot.hasData) {
                       var feedbacks = snapshot.data!;
                       return ListView.builder(
+                          physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: feedbacks.length,
                           itemBuilder: (context, i) {

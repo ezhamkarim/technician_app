@@ -1,7 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:technician_app/src/helper/log_helper.dart';
-import 'package:technician_app/src/model/send_notification_model.dart';
 
 import '../model/fcm_model.dart';
 
@@ -24,13 +23,13 @@ class FirebaseMessagingService {
     });
   }
 
-  static Future<void> sendMessage(
-      String pushTokenCustomer, SendNotification sendNotification) async {
-    try {
-      await _firebaseMessaging.sendMessage(
-          to: pushTokenCustomer, data: sendNotification.toMap());
-    } catch (e) {
-      logError('Failed to send message ${e.toString()}');
-    }
-  }
+  // static Future<void> sendMessage(
+  //     String pushTokenCustomer, SendNotification sendNotification) async {
+  //   try {
+  //     await _firebaseMessaging.sendMessage(
+  //         to: pushTokenCustomer, data: sendNotification.toMap());
+  //   } catch (e) {
+  //     logError('Failed to send message ${e.toString()}');
+  //   }
+  // }
 }

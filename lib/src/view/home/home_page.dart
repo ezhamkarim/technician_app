@@ -483,7 +483,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Home.',
+          'Step to use this app.',
           style: CustomStyle.getStyle(
               Colors.black, FontSizeEnum.title, FontWeight.bold),
         ),

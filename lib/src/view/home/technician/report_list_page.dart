@@ -143,7 +143,7 @@ class _ReportListPageState extends State<ReportListPage> {
                                   });
                                   final pdfFile =
                                       await PdfParagraphController.generate(
-                                          'Report $name for $date - $dateOneMonth ',
+                                          'Report $name for $dateOneMonth - $date',
                                           booking.toList());
 
                                   PdfController.openFile(pdfFile);

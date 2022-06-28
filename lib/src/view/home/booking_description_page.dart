@@ -76,7 +76,38 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                       const SizedBox(
                         height: 24,
                       ),
-                      Text(DateFormat('dd/MM/yyyy').format(booking.dateTime)),
+                      Row(
+                        children: [
+                          Text(
+                            'Booking Created',
+                            style: CustomStyle.getStyle(Colors.black,
+                                FontSizeEnum.content, FontWeight.bold),
+                          ),
+                          Text(DateFormat('dd/MM/yyyy')
+                              .format(booking.dateTime)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Time Slots',
+                            style: CustomStyle.getStyle(Colors.black,
+                                FontSizeEnum.content, FontWeight.bold),
+                          ),
+                          Column(
+                              children: booking.timeSlot
+                                  .map((e) => Text(
+                                      '${e.time} ${DateFormat('dd/MM/yyyy').format(e.date)}'))
+                                  .toList())
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -120,6 +151,9 @@ class _BookingDescriptionPageState extends State<BookingDescriptionPage> {
                                   },
                                   child: const Text('Update'))
                         ],
+                      ),
+                      const SizedBox(
+                        height: 24,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,

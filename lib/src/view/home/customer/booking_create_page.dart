@@ -271,16 +271,23 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                         if (timeSlots[i].isBooked == false) {
                           setState(() {
                             timeSlots[i].isSelected = !timeSlots[i].isSelected;
-                            // logInfo('hei ${timeSlots[i].isBooked}');
-                            // if (timeSlots[i].isSelected = true) {
-                            //   for (var i = 0; i < timeSlots.length; i++) {
-                            //     if (timeSlots[i].isBooked == false) {
-                            //       timeSlots[i].isSelected = false;
-                            //     }
-                            //   }
-                            // }
                           });
                         }
+                        var lengthSelected = timeSlots
+                            .where((element) => element.isSelected == true)
+                            .toList()
+                            .length;
+                        if (lengthSelected > 2 && timeSlots[i].isSelected) {
+                          setState(() {
+                            timeSlots[i].isSelected = false;
+                          });
+                        }
+                        // else if (lengthSelected == 2 &&
+                        //     timeSlots[i].isSelected) {
+                        //   setState(() {
+                        //     timeSlots[i].isSelected = !timeSlots[i].isSelected;
+                        //   });
+                        // }
                       },
                       child: Card(
                           color: timeSlots[i].isBooked
@@ -371,13 +378,13 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                                   'Time Slots ${selectedTimeSlots[i].toMap()}');
                             }
 
-                            await Future.forEach<TimeSlot>(selectedTimeSlots,
-                                (item) async {
-                              await timeSlotController.create(item);
-                            });
+                            // await Future.forEach<TimeSlot>(selectedTimeSlots,
+                            //     (item) async {
+                            //   await timeSlotController.create(item);
+                            // });
                             bookingModel.timeSlot = selectedTimeSlots;
-                            await bookingController.update(
-                                bookingModel, rootProvider);
+                            // await bookingController.update(
+                            //     bookingModel, rootProvider);
                             logSuccess('Booking Model ${bookingModel.toMap()}');
                             rootProvider.resetNotifier();
                             Navigator.of(context).pop();
