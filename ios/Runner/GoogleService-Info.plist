@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>761280440018-2ebc2nhqnha971m4ptfql4229st026ed.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.761280440018-2ebc2nhqnha971m4ptfql4229st026ed</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>761280440018-b5kqib90r3ure0h2kqij02m7ci1poh03.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDN7mw2jx0vNGum26MXUxyB2VYWTN7UV3A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>761280440018</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fyp.technicianApp</string>
+	<key>PROJECT_ID</key>
+	<string>signin-75855</string>
+	<key>STORAGE_BUCKET</key>
+	<string>signin-75855.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:761280440018:ios:23ba2347d262555062ef0b</string>
+	<key>DATABASE_URL</key>
+	<string>https://signin-75855.firebaseio.com</string>
+</dict>
+</plist>

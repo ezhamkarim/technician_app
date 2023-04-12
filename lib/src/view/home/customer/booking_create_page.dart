@@ -31,78 +31,15 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
   final bookingController = BookingController();
   List<TimeSlot> timeSlots = [];
   List<TimeSlot> timeSlotsTemplate = [
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '9:00 AM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '10:00 AM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '11:00 AM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '12:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '1:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '2:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '3:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '4:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: ''),
-    TimeSlot(
-        id: '',
-        technicianId: '',
-        time: '5:00 PM',
-        date: DateTime.now(),
-        isBooked: false,
-        bookingId: '',
-        userId: '')
+    TimeSlot(id: '', technicianId: '', time: '9:00 AM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '10:00 AM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '11:00 AM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '12:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '1:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '2:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '3:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '4:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: ''),
+    TimeSlot(id: '', technicianId: '', time: '5:00 PM', date: DateTime.now(), isBooked: false, bookingId: '', userId: '')
   ];
   DateTime _focusedDay = DateTime.now();
   CalendarFormat calendarFormat = CalendarFormat.twoWeeks;
@@ -125,8 +62,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
     if (rootProvider == null) {
       return;
     }
-    if (!isSameDay(_selectedDay, selectedDay) &&
-        rootProvider?.technician != null) {
+    if (!isSameDay(_selectedDay, selectedDay) && rootProvider?.technician != null) {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
@@ -145,9 +81,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
   void _getSelectedDays() {
     var technicianId = rootProvider?.technician;
     if (technicianId == null) return;
-    streamSubscriptionTS = timeSlotController
-        .readForBooking(_selectedDay!, technicianId.id)
-        .listen((event) {
+    streamSubscriptionTS = timeSlotController.readForBooking(_selectedDay!, technicianId.id).listen((event) {
       logInfo('Event $event Focused Day $_selectedDay');
       setState(() {
         List<TimeSlot> tempTemplate = timeSlotsTemplate;
@@ -161,8 +95,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
             element.isBooked = false;
           }
           for (var i = 0; i < event.length; i++) {
-            var index = tempTemplate
-                .indexWhere((element) => element.time == event[i].time);
+            var index = tempTemplate.indexWhere((element) => element.time == event[i].time);
 
             if (index != -1) {
               tempTemplate[index] = event[i];
@@ -202,8 +135,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                     ),
                     Text(
                       'Create Booking.',
-                      style: CustomStyle.getStyle(
-                          Colors.black, FontSizeEnum.title, FontWeight.bold),
+                      style: CustomStyle.getStyle(Colors.black, FontSizeEnum.title, FontWeight.bold),
                     ),
                   ],
                 ),
@@ -214,15 +146,12 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(rootProvider.technician == null
-                          ? 'Select Technician'
-                          : rootProvider.technician!.name),
+                      Text(rootProvider.technician == null ? 'Select Technician' : rootProvider.technician!.name),
                       const FaIcon(FontAwesomeIcons.chevronRight)
                     ],
                   ),
                   onTap: () async {
-                    await Navigator.of(context)
-                        .pushNamed(TechnicianListPage.routeName);
+                    await Navigator.of(context).pushNamed(TechnicianListPage.routeName);
                     _getSelectedDays();
                   },
                 ),
@@ -234,16 +163,13 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(rootProvider.services.isEmpty
-                            ? 'Select services'
-                            : rootProvider.services.toString()),
+                        child: Text(rootProvider.services.isEmpty ? 'Select services' : rootProvider.services.toString()),
                       ),
                       const FaIcon(FontAwesomeIcons.chevronRight)
                     ],
                   ),
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(ServiceListPageSelection.routeName);
+                    Navigator.of(context).pushNamed(ServiceListPageSelection.routeName);
                   },
                 ),
                 const SizedBox(
@@ -253,7 +179,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                   availableGestures: AvailableGestures.horizontalSwipe,
                   focusedDay: _focusedDay,
                   firstDay: DateTime.now(),
-                  lastDay: DateTime.utc(2023, 1, 1),
+                  lastDay: DateTime.utc(2024, 1, 1),
                   calendarFormat: calendarFormat,
                   selectedDayPredicate: (day) {
                     return isSameDay(_selectedDay, day);
@@ -283,10 +209,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                             timeSlots[i].isSelected = !timeSlots[i].isSelected;
                           });
                         }
-                        var lengthSelected = timeSlots
-                            .where((element) => element.isSelected == true)
-                            .toList()
-                            .length;
+                        var lengthSelected = timeSlots.where((element) => element.isSelected == true).toList().length;
                         if (lengthSelected > 2 && timeSlots[i].isSelected) {
                           setState(() {
                             timeSlots[i].isSelected = false;
@@ -310,18 +233,14 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                             children: [
                               Text(
                                 timeSlots[i].time,
-                                style: CustomStyle.getStyle(Colors.white,
-                                    FontSizeEnum.content2, FontWeight.normal),
+                                style: CustomStyle.getStyle(Colors.white, FontSizeEnum.content2, FontWeight.normal),
                               ),
                             ],
                           )),
                     );
                   },
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 100,
-                      childAspectRatio: 4 / 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
+                      maxCrossAxisExtent: 100, childAspectRatio: 4 / 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
                 ),
                 const SizedBox(
                   height: 48,
@@ -330,8 +249,7 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                   children: [
                     Text(
                       'TOTAL : RM ${rootProvider.total.toString()}',
-                      style: CustomStyle.getStyle(
-                          Colors.black, FontSizeEnum.content2, FontWeight.bold),
+                      style: CustomStyle.getStyle(Colors.black, FontSizeEnum.content2, FontWeight.bold),
                     ),
                     const SizedBox(
                       width: 16,
@@ -357,11 +275,9 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
 
                             if (selectedTimeSlots.isEmpty) return;
                             var bookingModel = Booking(
-                                customerName:
-                                    rootProvider.userModel?.name ?? '',
+                                customerName: rootProvider.userModel?.name ?? '',
                                 customerId: firebaseUser.uid,
-                                estimateTime:
-                                    DateTime.now().add(const Duration(days: 2)),
+                                estimateTime: DateTime.now().add(const Duration(days: 2)),
                                 id: '',
                                 services: rootProvider.services,
                                 dateTime: DateTime.now(),
@@ -373,32 +289,25 @@ class _BookingCreatePageState extends State<BookingCreatePage> {
                                 feedbackId: '',
                                 technicianId: rootProvider.technician!.id,
                                 technicianName: rootProvider.technician!.name,
-                                phoneNumberTechnician:
-                                    rootProvider.technician!.phoneNumber);
-                            var bookingResult = await bookingController.create(
-                                bookingModel, rootProvider);
+                                phoneNumberTechnician: rootProvider.technician!.phoneNumber);
+                            var bookingResult = await bookingController.create(bookingModel, rootProvider);
 
                             if (bookingResult == null) return;
 
                             for (var i = 0; i < selectedTimeSlots.length; i++) {
                               selectedTimeSlots[i].isBooked = true;
                               selectedTimeSlots[i].bookingId = bookingResult.id;
-                              selectedTimeSlots[i].technicianId =
-                                  rootProvider.technician!.id;
-                              logSuccess(
-                                  'Time Slots ${selectedTimeSlots[i].toMap()}');
+                              selectedTimeSlots[i].technicianId = rootProvider.technician!.id;
+                              logSuccess('Time Slots ${selectedTimeSlots[i].toMap()}');
                             }
 
-                            await Future.forEach<TimeSlot>(selectedTimeSlots,
-                                (item) async {
+                            await Future.forEach<TimeSlot>(selectedTimeSlots, (item) async {
                               item.isBooked = true;
-                              var result =
-                                  await timeSlotController.create(item);
+                              var result = await timeSlotController.create(item);
                               if (result == null) {}
                             });
                             bookingModel.timeSlot = selectedTimeSlots;
-                            await bookingController.update(
-                                bookingModel, rootProvider);
+                            await bookingController.update(bookingModel, rootProvider);
                             logSuccess('Booking Model ${bookingModel.toMap()}');
 
                             rootProvider.resetNotifier();

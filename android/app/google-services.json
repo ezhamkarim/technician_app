@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -68,10 +68,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -112,10 +112,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -148,10 +148,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -184,10 +184,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -220,10 +220,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -264,46 +264,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:761280440018:android:45765a744e192b9b62ef0b",
-        "android_client_info": {
-          "package_name": "com.example.runcloud_mobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyARoolIxeutppUXEPiZoeurKbjh5I3wrcc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -344,10 +308,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -380,10 +344,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -416,10 +380,10 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]
@@ -452,10 +416,118 @@
               "client_type": 3
             },
             {
-              "client_id": "761280440018-rg9klbend485hqcpv67vj9f3m5p43q7i.apps.googleusercontent.com",
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.fyp.technician"
+                "bundle_id": "com.example.mygenAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761280440018:android:3501d8077bc36d4e62ef0b",
+        "android_client_info": {
+          "package_name": "com.gis.mdt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARoolIxeutppUXEPiZoeurKbjh5I3wrcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mygenAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761280440018:android:ac9aa7657663fb0862ef0b",
+        "android_client_info": {
+          "package_name": "com.iraudhah.mygen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARoolIxeutppUXEPiZoeurKbjh5I3wrcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mygenAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761280440018:android:1bd48f31dc38f51b62ef0b",
+        "android_client_info": {
+          "package_name": "com.spleb.spleb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARoolIxeutppUXEPiZoeurKbjh5I3wrcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761280440018-edr9qjc7apdnpas79pfc9nia5lpgf7ch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "761280440018-iose4viemasuobkgrnaejp8vpjmc1i5b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mygenAdmin"
               }
             }
           ]

@@ -6,12 +6,14 @@ import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
 import 'src/settings/settings_service.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await LocalNotification().init();
   final settingsController = SettingsController(SettingsService());
 
